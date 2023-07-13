@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\rendering">
+      <UniqueIdentifier>{4656ff96-b5a8-4f09-901b-2e654d2e7b59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libs">
+      <UniqueIdentifier>{18a3c8d1-c69a-40da-8483-4582b4e73e26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libs\imgui">
+      <UniqueIdentifier>{1cd95752-dc60-4f44-bd94-2ef313a86081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rendering\modules">
+      <UniqueIdentifier>{e7734590-1899-45d4-870f-a05495861135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ressources">
+      <UniqueIdentifier>{49eacaa0-22f5-47e4-8ba4-6c2cee3c377f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rendering\ue4">
+      <UniqueIdentifier>{f5d9aed6-a3e9-42d2-89e5-f5fd1c382bb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rendering\ue4\wrappers">
+      <UniqueIdentifier>{2bf4afd8-c9d8-4b92-b1fc-6db1824fefa2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui.cpp">
+      <Filter>Source Files\libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui_demo.cpp">
+      <Filter>Source Files\libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui_draw.cpp">
+      <Filter>Source Files\libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui_impl_glfw.cpp">
+      <Filter>Source Files\libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui_impl_opengl3.cpp">
+      <Filter>Source Files\libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui_tables.cpp">
+      <Filter>Source Files\libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\driver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\overlay.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ue4.cpp">
+      <Filter>Source Files\rendering\ue4</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects.cpp">
+      <Filter>Source Files\rendering\ue4</Filter>
+    </ClCompile>
+    <ClCompile Include="src\names.cpp">
+      <Filter>Source Files\rendering\ue4</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uobject.cpp">
+      <Filter>Source Files\rendering\ue4</Filter>
+    </ClCompile>
+    <ClCompile Include="src\structs.cpp">
+      <Filter>Source Files\rendering\ue4</Filter>
+    </ClCompile>
+    <ClCompile Include="src\field.cpp">
+      <Filter>Source Files\rendering\ue4</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ulocalplayer.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aplayercontroller.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aplayerstate.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\apawn.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uworld.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\agamestate.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ugameinstance.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uhealthstatscomponent.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aactor.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uscenecomponent.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aplayercameramanager.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uskeletalmeshcomponent.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uskinnedasset.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\esp.cpp">
+      <Filter>Source Files\rendering\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\expoits.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uinventorycomponent.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aitemgungeneral.cpp">
+      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\polygon.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ue4.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\names.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cache.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ue4structs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ressources\roboto.h">
+      <Filter>Header Files\ressources</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ressources\window_constants.h">
+      <Filter>Header Files\ressources</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

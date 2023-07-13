@@ -1,0 +1,126 @@
+#include <polygon.hpp>
+#include <cache.hpp>
+
+void text_centered(std::string text) {
+	auto windowWidth = ImGui::GetWindowSize().x;
+	auto textWidth = ImGui::CalcTextSize(text.c_str()).x;
+
+	ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
+	ImGui::Text(text.c_str());
+}
+
+bool center_tab_button(const char* label, ImVec2 button_size, float alignment = 0.5f)
+{
+	ImGui::Spacing();
+	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 4.f);
+	return ImGui::Button(label, button_size);
+}
+
+void gui::draw_tabs(void)
+{
+	ImGui::Columns(2);
+	ImGui::SetColumnOffset(1, BUTTON_SIZE + 20.f);
+	ImVec2 button_size = ImVec2(BUTTON_SIZE, 40);
+
+	if (center_tab_button("Aimbot", button_size))
+		data::current_tab = WINDOW_TABS::AIMBOT;
+
+	if (center_tab_button("Visuals", button_size))
+		data::current_tab = WINDOW_TABS::VISUALS;
+
+	if (center_tab_button("Extras", button_size))
+		data::current_tab = WINDOW_TABS::EXTRA;
+
+	if (center_tab_button("Save Configuration", button_size))
+		config::config->write();
+
+	ImGui::NextColumn();
+}
+
+void gui::draw_menu(void)
+{
+	ImGui::ShowStyleEditor();
+	config::config_t* data = config::config->data();
+	ImGuiIO& io = ImGui::GetIO();
+
+	ImGui::SetNextWindowBgAlpha(1.0f);
+	ImGui::SetNextWindowPos(DefaultWindowPos, ImGuiCond_Appearing);
+	ImGui::SetNextWindowSize(DefaultWindowSize, ImGuiCond_Always);
+	ImGui::Begin("ramokaka", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
+
+	gui::draw_tabs();
+
+	switch (data::current_tab) {
+	case WINDOW_TABS::AIMBOT:
+		text_centered("Aimbot");
+		ImGui::Spacing();
+		ImGui::Checkbox("Enable", &data->aim);
+		ImGui::Checkbox("Smoothing", &data->smoothing);
+		if (data->smoothing)
+		{
+			ImGui::SliderFloat(" ", &data->smoothing_value, 0, 1, "% .2f");
+		}
+		ImGui::Checkbox("Enable FOV", &data->fov);
+		ImGui::Checkbox("Visible Check", &data->vis_check);
+		ImGui::Checkbox("Team Check", &data->team_check);
+		break;
+	case WINDOW_TABS::VISUALS:
+		text_centered("Visuals");
+		ImGui::Spacing();
+
+		ImGui::Checkbox("Enable ESP", &data->esp);
+		ImGui::Checkbox("Enable ESP Filled", &data->esp_filled);
+		ImGui::Checkbox("Enable Names ESP", &data->esp_player_name);
+		if (data->esp) {
+			ImGui::ColorEdit4("##color", data->esp_color, ImGuiColorEditFlags_NoInputs);
+			ImGui::SameLine();
+			ImGui::Text("ESP Color");
+		}
+
+		if (data->esp_filled) {
+			ImGui::ColorEdit4("##filledcolor", data->esp_filled_color, ImGuiColorEditFlags_NoInputs);
+			ImGui::SameLine();
+			ImGui::Text("ESP Filled Color");
+		}	
+		
+		if (data->esp_player_name) {
+			ImGui::ColorEdit4("##namescolor", data->esp_player_name_color, ImGuiColorEditFlags_NoInputs);
+			ImGui::SameLine();
+			ImGui::Text("ESP Player Name Color");
+		}
+
+		if (data->esp_mode > ESP_MAX) {
+			data->esp_mode = ESP_3D;
+			config::config->write();
+		}
+		ImGui::SliderInt("ESP Mode", (int*)&data->esp_mode, ESP_3D, ESP_MAX-1, (const char*)esp_mode_to_string[data->esp_mode]);
+
+		ImGui::Checkbox("Visible Check", &data->vis_check);
+		ImGui::Checkbox("Team Check", &data->team_check);
+
+		break;
+	case WINDOW_TABS::EXTRA:
+		text_centered("Extra");
+		ImGui::Spacing();
+		ImGui::Checkbox("Debug Info", &data->debug_info);
+		ImGui::Checkbox("No Spread", &data->no_spread);
+		ImGui::Checkbox("No Recoil", &data->no_recoil);
+		ImGui::Checkbox("Infinite Stamina", &data->infinite_stamina);
+		ImGui::Checkbox("Rapid fire", &data->rapid_fire);
+		ImGui::Checkbox("Fast move", &data->fast_move);
+		ImGui::Checkbox("Instant Aim", &data->instant_aim);
+
+		if (data->rapid_fire) {
+			ImGui::SliderFloat("Time Between Shots", &data->time_between_shots, 0, 0.35f);
+			ImGui::SameLine();
+			if (ImGui::Button("Reset") && cache::LocalCurrentWeapon) {
+				data->time_between_shots = exploits::get_original_time_between_shots();
+			}
+		}
+		break;
+	}
+	
+
+
+	ImGui::End();
+}
