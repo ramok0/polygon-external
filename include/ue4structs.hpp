@@ -40,7 +40,7 @@ struct TArray {
 			return nullptr;
 		}
 
-		return buffer;
+		return std::unique_ptr<T>(buffer);
 	}
 };
 

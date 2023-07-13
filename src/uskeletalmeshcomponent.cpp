@@ -13,17 +13,23 @@ std::optional<TArray<FTransform>> USkeletalMeshComponent::get_bone_array(void)
 	return bone_array;
 }
 
-Vector3 USkeletalMeshComponent::get_bone_with_rotation(int Index)
+std::unique_ptr<FTransform> USkeletalMeshComponent::get_bones(void)
+{
+	auto bone_array = this->get_bone_array();
+	if (!bone_array) return nullptr;
+
+	return (*bone_array).read_every_elements();
+}
+
+Vector3 USkeletalMeshComponent::get_bone_with_rotation(FTransform bone)
 {
 	if (this == nullptr) return { 0,0,0 };
 
-	std::optional<TArray<FTransform>> bone_array = this->get_bone_array();
-	if (!bone_array) return { 0,0,0 };
+	//std::optional<TArray<FTransform>> bone_array = this->get_bone_array();
+	//if (!bone_array) return { 0,0,0 };
 
-	//sale fils de pute
-
-	//FTransform bone = driver::unsafe_read<FTransform>((uintptr_t)bone_array.value().Data + (0x60 * Index));
-	FTransform bone = (*bone_array)[Index];
+	////FTransform bone = driver::unsafe_read<FTransform>((uintptr_t)bone_array.value().Data + (0x60 * Index));
+	//FTransform bone = (*bone_array)[Index];
 	FTransform component_to_world = this->get_component_to_world();
 
 	FMatrix matrix = bone.ToMatrixWithScale() * component_to_world.ToMatrixWithScale();

@@ -78,7 +78,8 @@ public:
 class USkeletalMeshComponent {
 public:
 	std::optional<TArray<FTransform>> get_bone_array(void);
-	Vector3 get_bone_with_rotation(int Index);
+	std::unique_ptr<FTransform> get_bones(void);
+	Vector3 get_bone_with_rotation(FTransform bone);
 	FTransform get_component_to_world(void);
 	USkinnedAsset* get_skinned_asset(void);
 };

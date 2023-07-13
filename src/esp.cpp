@@ -51,8 +51,10 @@ void overlay::draw_2d_bounding_esp(USceneComponent* RootComponent)
 
 void overlay::draw_2d_corner(USkeletalMeshComponent* Mesh)
 {
-	Vector3 headPos = Mesh->get_bone_with_rotation(Bones::Head);
-	Vector3 bottomPos = Mesh->get_bone_with_rotation(Bones::Root);
+	FTransform* bones = Mesh->get_bones().get();
+	
+	Vector3 headPos = Mesh->get_bone_with_rotation(bones[Bones::Head]);
+	Vector3 bottomPos = Mesh->get_bone_with_rotation(bones[Bones::Root]);
 
 	Vector2Float headBox = world_to_screen({ headPos.x, headPos.y, headPos.z + 5 });
 	Vector2Float headLoc = world_to_screen(headPos);
@@ -80,8 +82,9 @@ void overlay::draw_2d_corner(USkeletalMeshComponent* Mesh)
 
 void overlay::draw_2d(USkeletalMeshComponent* Mesh)
 {
-	Vector3 headPos = Mesh->get_bone_with_rotation(Bones::Head);
-	Vector3 bottomPos = Mesh->get_bone_with_rotation(Bones::Root);
+	FTransform* bones = Mesh->get_bones().get();
+	Vector3 headPos = Mesh->get_bone_with_rotation(bones[Bones::Head]);
+	Vector3 bottomPos = Mesh->get_bone_with_rotation(bones[Bones::Root]);
 
 	Vector2Float headBox = world_to_screen({ headPos.x, headPos.y, headPos.z + 5 });
 	Vector2Float bottomLoc = world_to_screen(bottomPos);
@@ -159,8 +162,8 @@ void overlay::draw3d_esp(USceneComponent* RootComponent)
 void overlay::draw_player_name(USkeletalMeshComponent* Mesh, std::string player_name)
 {
 	float* player_name_color = config::config->data()->esp_player_name_color;
-
-	Vector3 root_location = Mesh->get_bone_with_rotation(Bones::Root);
+	FTransform* bones = Mesh->get_bones().get();
+	Vector3 root_location = Mesh->get_bone_with_rotation(bones[Bones::Root]);
 	
 	Vector2Float root_screen = world_to_screen(root_location);
 
