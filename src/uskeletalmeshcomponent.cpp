@@ -20,7 +20,7 @@ Vector3 USkeletalMeshComponent::get_bone_with_rotation(int Index)
 	std::optional<TArray<FTransform>> bone_array = this->get_bone_array();
 	if (!bone_array) return { 0,0,0 };
 
-	//sltcv
+	//sale fils de pute
 
 	//FTransform bone = driver::unsafe_read<FTransform>((uintptr_t)bone_array.value().Data + (0x60 * Index));
 	FTransform bone = (*bone_array)[Index];
