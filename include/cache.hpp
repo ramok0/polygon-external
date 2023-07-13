@@ -14,6 +14,7 @@ struct Entity_t {
 	HealthStatsComponentData HealthComponentData;
 	uint8_t Team;
 	std::string player_name;
+	std::shared_ptr<FTransform> bones;
 };
 
 namespace cache {

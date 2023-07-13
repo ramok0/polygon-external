@@ -13,7 +13,7 @@ std::optional<TArray<FTransform>> USkeletalMeshComponent::get_bone_array(void)
 	return bone_array;
 }
 
-std::unique_ptr<FTransform> USkeletalMeshComponent::get_bones(void)
+std::shared_ptr<FTransform> USkeletalMeshComponent::get_bones(void)
 {
 	auto bone_array = this->get_bone_array();
 	if (!bone_array) return nullptr;

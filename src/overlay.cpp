@@ -7,7 +7,7 @@ void overlay::draw(void) {
 		if (entity.HealthComponentData.bIsAlive == false || entity.HealthComponentData.Health == 0) continue;
 		if (data->team_check && cache::LocalTeam == entity.Team) continue;
 
-		FTransform* bones = entity.Mesh->get_bones().get();
+		FTransform* bones = entity.bones.get();
 
 		switch (data->esp_mode) {
 		case ESP_MODE::ESP_3D:

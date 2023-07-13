@@ -31,7 +31,7 @@ struct TArray {
 		return buffer;
 	}
 
-	std::unique_ptr<T> read_every_elements() {
+	std::shared_ptr<T> read_every_elements() {
 		T* buffer = new T[Count];
 
 		if(!driver::read((uintptr_t)Data, (uintptr_t)buffer, (uintptr_t)(Count * sizeof(T))))
@@ -40,7 +40,7 @@ struct TArray {
 			return nullptr;
 		}
 
-		return std::unique_ptr<T>(buffer);
+		return std::shared_ptr<T>(buffer);
 	}
 };
 

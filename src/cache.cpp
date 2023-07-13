@@ -63,6 +63,7 @@ void cache::cache_data()
 			entity.HealthComponentData = *healthData;
 			entity.Team = playerState->get_team_number();
 			entity.player_name = playerState->get_player_name();
+			entity.bones = mesh->get_bones();
 
 			temp_entities.push_back(entity);
 		}
