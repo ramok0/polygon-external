@@ -25,10 +25,10 @@ Vector3 USkeletalMeshComponent::get_bone_with_rotation(FTransform bone)
 {
 	if (this == nullptr) return { 0,0,0 };
 
-	//std::optional<TArray<FTransform>> bone_array = this->get_bone_array();
+	//std::optional<TArray<FTransform>> bone_array = this->get_bone_array(); 0x10
 	//if (!bone_array) return { 0,0,0 };
 
-	////FTransform bone = driver::unsafe_read<FTransform>((uintptr_t)bone_array.value().Data + (0x60 * Index));
+	////FTransform bone = driver::unsafe_read<FTransform>((uintptr_t)bone_array.value().Data + (0x60 * Index)); 0x60
 	//FTransform bone = (*bone_array)[Index];
 	FTransform component_to_world = this->get_component_to_world();
 

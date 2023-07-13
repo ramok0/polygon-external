@@ -49,10 +49,8 @@ void overlay::draw_2d_bounding_esp(USceneComponent* RootComponent)
 	ImGui::GetForegroundDrawList()->AddRect({ screen_top_right.x, screen_top_right.y }, { screen_bottom_left.x, screen_bottom_left.y }, ImColor(esp_color[0], esp_color[1], esp_color[2], esp_color[3]));
 }
 
-void overlay::draw_2d_corner(USkeletalMeshComponent* Mesh)
+void overlay::draw_2d_corner(USkeletalMeshComponent* Mesh, FTransform* bones)
 {
-	FTransform* bones = Mesh->get_bones().get();
-	
 	Vector3 headPos = Mesh->get_bone_with_rotation(bones[Bones::Head]);
 	Vector3 bottomPos = Mesh->get_bone_with_rotation(bones[Bones::Root]);
 
@@ -80,9 +78,8 @@ void overlay::draw_2d_corner(USkeletalMeshComponent* Mesh)
 	DrawCorneredBox(headBox.x - (CornerWidth / 2), headBox.y, CornerWidth, CornerHeight, color, 1.5f);
 }
 
-void overlay::draw_2d(USkeletalMeshComponent* Mesh)
+void overlay::draw_2d(USkeletalMeshComponent* Mesh, FTransform* bones)
 {
-	FTransform* bones = Mesh->get_bones().get();
 	Vector3 headPos = Mesh->get_bone_with_rotation(bones[Bones::Head]);
 	Vector3 bottomPos = Mesh->get_bone_with_rotation(bones[Bones::Root]);
 
@@ -159,10 +156,9 @@ void overlay::draw3d_esp(USceneComponent* RootComponent)
 
 }
 
-void overlay::draw_player_name(USkeletalMeshComponent* Mesh, std::string player_name)
+void overlay::draw_player_name(USkeletalMeshComponent* Mesh, FTransform* bones, std::string player_name)
 {
 	float* player_name_color = config::config->data()->esp_player_name_color;
-	FTransform* bones = Mesh->get_bones().get();
 	Vector3 root_location = Mesh->get_bone_with_rotation(bones[Bones::Root]);
 	
 	Vector2Float root_screen = world_to_screen(root_location);

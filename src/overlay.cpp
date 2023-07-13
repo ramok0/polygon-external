@@ -7,15 +7,17 @@ void overlay::draw(void) {
 		if (entity.HealthComponentData.bIsAlive == false || entity.HealthComponentData.Health == 0) continue;
 		if (data->team_check && cache::LocalTeam == entity.Team) continue;
 
+		FTransform* bones = entity.Mesh->get_bones().get();
+
 		switch (data->esp_mode) {
 		case ESP_MODE::ESP_3D:
 			overlay::draw3d_esp(entity.RootComponent);
 			break;
 		case ESP_MODE::ESP_2DCORNER:
-			overlay::draw_2d_corner(entity.Mesh);
+			overlay::draw_2d_corner(entity.Mesh, bones);
 			break;
 		case ESP_MODE::ESP_2D:
-			overlay::draw_2d(entity.Mesh);
+			overlay::draw_2d(entity.Mesh, bones);
 			break;	
 		default:
 		case ESP_MODE::ESP_2DBOUNDING:
@@ -24,7 +26,7 @@ void overlay::draw(void) {
 		}
 		
 		if (data->esp_player_name) {
-			overlay::draw_player_name(entity.Mesh, entity.player_name);
+			overlay::draw_player_name(entity.Mesh, bones, entity.player_name);
 		}
 
 		//overlay::draw3d_esp(entity.RootComponent);

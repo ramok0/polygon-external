@@ -130,10 +130,10 @@ UWorld* get_world(void);
 namespace overlay {
 	void draw_tracers(void);
 	void draw_2d_bounding_esp(USceneComponent* RootComponent);
-	void draw_2d_corner(USkeletalMeshComponent* Mesh);
-	void draw_2d(USkeletalMeshComponent* Mesh);
+	void draw_2d_corner(USkeletalMeshComponent* Mesh, FTransform* bones);
+	void draw_2d(USkeletalMeshComponent* Mesh, FTransform* bones);
 	void draw3d_esp(USceneComponent* RootComponent);
-	void draw_player_name(USkeletalMeshComponent* Mesh, std::string player_name);
+	void draw_player_name(USkeletalMeshComponent* Mesh, FTransform* bones, std::string player_name);
 
 	void draw(void);
 }
