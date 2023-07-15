@@ -19,6 +19,7 @@ struct Entity_t {
 	std::string player_name;
 	BoneCluster player_bones;
 	FTransform component_to_world;
+	bool is_visible;
 
 	Vector3 get_bone_with_rotation(int Index) {
 		if (Index > this->player_bones.size()) {
@@ -42,6 +43,8 @@ namespace cache {
 	inline UHealthStatsComponent* LocalHealthStatsComponent;
 	inline AItem_Gun_General* LocalCurrentWeapon;
 	inline float world_to_meters;
+	inline std::optional<Entity_t> closest_entity;
+	inline std::vector<std::string> bones;
 	//inline std::unordered_map<std::string, std::unordered_map <std::string, int>> skeleton_name_to_bone_name_to_id;
 
 	void cache_data();

@@ -156,6 +156,9 @@
     <ClCompile Include="include\polygon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\aimbot.cpp">
+      <Filter>Source Files\modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\polygon.hpp">

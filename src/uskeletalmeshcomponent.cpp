@@ -47,6 +47,27 @@ USkinnedAsset* USkeletalMeshComponent::get_skinned_asset(void)
 	return SkeletalMesh;
 }
 
+bool USkeletalMeshComponent::was_recently_rendered(void)
+{
+	if (!this) return false;
+	//struct bitfield_t {
+	//	char bPerBoneMotionBlur : 1; // 0x7c7(0x01)
+	//	char bComponentUseFixedSkelBounds : 1; // 0x7c7(0x01)
+	//	char bConsiderAllBodiesForBounds : 1; // 0x7c7(0x01)
+	//	char bSyncAttachParentLOD : 1; // 0x7c7(0x01)
+	//	char bCanHighlightSelectedSections : 1; // 0x7c7(0x01)
+	//	char bRecentlyRendered : 1; // 0x7c7(0x01)
+	//	char bCastCapsuleDirectShadow : 1; // 0x7c7(0x01)
+	//	char bCastCapsuleIndirectShadow : 1; // 0x7c7(0x01)
+	//} data;
+
+	ONCE_GET_OFFSET("/Script/Engine.SkinnedMeshComponent", "bPerBoneMotionBlur", bPerBoneMotionBlurOffset);
+
+	uint8_t bitfield = driver::unsafe_read<uint8_t>((uintptr_t)this + bPerBoneMotionBlurOffset);
+
+	return (bitfield >> 5) & 0x01;
+}
+
 //USkeletalMesh* USkeletalMeshComponent::get_skeletal_mesh_asset(void)
 //{
 //	SIMPLE_READ_PTR(USkeletalMesh*, "/Script/Engine.SkeletalMeshComponent", "SkeletalMeshAsset", SkeletalMeshAsset);

@@ -36,6 +36,12 @@ enum class EPG_GameState : uint8_t {
 	EPG_MAX = 6
 };
 
+struct render_info_t {
+	float LastSumbitTime;
+	float LastRenderTime;
+	float LastRenderTimeOnScreen;
+};
+
 class AItem_Gun_General {
 public:
 	float get_time_between_shots(void);
@@ -51,6 +57,7 @@ class USceneComponent {
 public:
 	Vector3 relative_location(void);
 	FBoxSphereBounds get_cached_bounds(void);
+	render_info_t get_render_data(void);
 };
 
 class AActor {
@@ -97,6 +104,7 @@ public:
 class USkinnedAsset {
 public:
 	std::unordered_map <std::string, int> get_bones();
+	std::vector <std::string> get_bones_as_vector();
 };
 
 class USkeletalMeshComponent {
@@ -106,6 +114,8 @@ public:
 	Vector3 get_bone_with_rotation(int Index);
 	FTransform get_component_to_world(void);
 	USkinnedAsset* get_skinned_asset(void);
+	bool set_force_wireframe(uint8_t newValue);
+	bool was_recently_rendered(void);
 };
 
 struct HealthStatsComponentData {
@@ -126,6 +136,8 @@ public:
 	USkeletalMeshComponent* get_mesh(void);
 	UHealthStatsComponent* get_health_component(void);
 	APlayerState* get_player_state(void);
+
+	bool move_at(FRotator look_at_coords);
 };
 
 class APlayerCameraManager {
@@ -137,6 +149,7 @@ class APlayerController {
 public:
 	class APawn* get_pawn(void);
 	class APlayerCameraManager* get_camera_manager(void);
+	FRotator get_control_rotation(void);
 };
 
 class ULocalPlayer {
@@ -206,6 +219,7 @@ struct BoneCluster {
 };
 
 
+
 Vector2Float world_to_screen(Vector3 world_location);
 
 void cache_offsets(void);
@@ -222,4 +236,8 @@ namespace exploits {
 	void fast_move();
 	float get_original_time_between_shots(void);
 	float get_original_mobility(void);
+}
+
+namespace modules {
+	void aimbot();
 }

@@ -6,6 +6,7 @@
 #define M_PI       3.14159265358979323846
 #define DEG_TO_RAD 0.01745329251994329576924
 #define DEG_TO_RAD2 0.008726646259971647884619
+#define DEG_TO_RAD3 57.2957795130823208768
 
 template <typename T>
 struct TArray {
@@ -36,7 +37,7 @@ struct TArray {
 	T* read_every_elements() {
 		T* bufferData = new T[Count];
 
-		if(!driver::read((uintptr_t)Data, (uintptr_t)bufferData, (uintptr_t)(sizeof(T) * Count)))
+		if (!driver::read((uintptr_t)Data, (uintptr_t)bufferData, (uintptr_t)(sizeof(T) * Count)))
 		{
 			delete[] bufferData;
 			return nullptr;
@@ -80,8 +81,8 @@ struct Vector3 {
 
 	Vector3 operator-(Vector3 other) const {
 		return Vector3(this->x - other.x, this->y - other.y, this->z - other.z);
-	}	
-	
+	}
+
 	Vector3 operator+(Vector3 other) {
 		return Vector3(this->x + other.x, this->y + other.y, this->z + other.z);
 	}
@@ -100,7 +101,7 @@ struct Vector3 {
 	{
 		return (*this - Other).Size();
 
-	//	return ().Size();
+		//	return ().Size();
 	}
 
 	operator bool() {
@@ -121,8 +122,24 @@ struct Vector2Float {
 	float x;
 	float y;
 
+	float Size() const
+	{
+		return std::sqrt(x * x + y * y);
+	}
+
+	Vector2Float operator-(Vector2Float other) {
+		return Vector2Float{
+			x - other.x,
+			y - other.y
+		};
+	}
+
 	operator bool() {
 		return x != 0 && y != 0;
+	}
+
+	float Distance(Vector2Float other) {
+		return (*this - other).Size();
 	}
 };
 
@@ -130,6 +147,54 @@ struct FRotator {
 	double Pitch;
 	double Yaw;
 	double Roll;
+
+	FRotator operator-(FRotator other) {
+		return FRotator{
+			Pitch - other.Pitch,
+			Yaw - other.Yaw,
+			Roll - other.Roll
+		};
+	}
+
+	FRotator clamp() {
+		Yaw = fmod(Yaw, 360.0);
+		if (Yaw < 0.0)
+			Yaw += 360.0;
+
+		if (Pitch < -85.0) {
+			Pitch = -85.0;
+		}
+		else if (Pitch > 85.0) {
+			Pitch = 85.0;
+		}
+
+		return FRotator(Pitch, Yaw, Roll);
+	}
+
+	FRotator operator*(float scalar) {
+		return FRotator(Pitch * scalar, Yaw * scalar, Roll);
+	}
+
+	FRotator operator+(FRotator other) {
+		return FRotator{
+			Pitch + other.Pitch,
+			Yaw + other.Yaw,
+			Roll + other.Roll
+		};
+	}
+
+	FRotator lerp(FRotator other, float t)
+	{
+
+		
+
+		//double LerpedPitch = Pitch + (other.Pitch - Pitch) * Alpha;
+		//double LerpedYaw = Yaw + (other.Yaw - Yaw) * Alpha;
+		//double LerpedRoll = Roll + (other.Roll - Roll) * Alpha;
+
+
+		return (*this + (other - *this) * t).clamp();
+	}
 };
 
 struct FMinimalViewInfo {

@@ -129,9 +129,7 @@ ImVec4 window::convert_color(const std::string& codeCouleurHTML)
 
 void window::tick(GLFWwindow* window)
 {
-	long long Timestamp = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
-	data::DeltaTime = (double)(Timestamp - data::LastFrameTimeStamp) / 100000;
-	data::LastFrameTimeStamp = Timestamp;
+
 
 
 	if (!IsWindow(data::gameWindow)) {

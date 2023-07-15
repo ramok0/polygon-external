@@ -56,11 +56,45 @@ void gui::draw_menu(void)
 		ImGui::Spacing();
 		ImGui::Checkbox("Enable", &data->aim);
 		ImGui::Checkbox("Smoothing", &data->smoothing);
+
+		if (data->aim) {
+			if (ImGui::BeginCombo("Aim Bone", cache::bones[data->aim_bone].c_str()))
+			{
+				for (int i = 0; i < cache::bones.size(); i++)
+				{
+					bool is_selected = data->aim_bone == i;
+					if (ImGui::Selectable(cache::bones[i].c_str(), &is_selected))
+					{
+						data->aim_bone = i;
+					}
+
+					if (is_selected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+		}
+
 		if (data->smoothing)
 		{
 			ImGui::SliderFloat(" ", &data->smoothing_value, 0, 1, "% .2f");
 		}
 		ImGui::Checkbox("Enable FOV", &data->fov);
+		ImGui::Checkbox("Enable closest player tracer", &data->aim_tracer);
+
+		if (data->fov) {
+			ImGui::SliderInt("Aimbot FOV", &data->fov_value, 10, 250);
+			ImGui::ColorEdit4("##fov_circle_color", data->fov_circle_color, ImGuiColorEditFlags_NoInputs);
+			ImGui::SameLine();
+			ImGui::Text("FOV Circle Color");
+		}
+
+		if (data->vis_check) {
+			ImGui::ColorEdit4("##esp_visible_color", data->esp_visible_color, ImGuiColorEditFlags_NoInputs);
+			ImGui::SameLine();
+			ImGui::Text("ESP Visible Color");
+		}
+
 		ImGui::Checkbox("Visible Check", &data->vis_check);
 		ImGui::Checkbox("Team Check", &data->team_check);
 		break;

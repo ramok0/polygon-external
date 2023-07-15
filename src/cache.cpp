@@ -39,6 +39,7 @@ void cache::cache_data()
 		APlayerState* LocalPlayerState = LocalPawn->get_player_state();
 
 		cache::LocalPawn = LocalPawn;
+
 		cache::LocalTeam = LocalPlayerState->get_team_number();
 
 		cache::LocalHealthStatsComponent = LocalPawn->get_health_component();
@@ -46,11 +47,17 @@ void cache::cache_data()
 
 		cache::world_to_meters = World->get_persistent_level()->get_world_settings()->get_world_to_meters();
 
+		if(cache::bones.size() == 0)
+			cache::bones = LocalPawn->get_mesh()->get_skinned_asset()->get_bones_as_vector();
+
 		//cache players
 		std::optional<TArray<APlayerState*>> playerList = GameState->get_player_array();
 		if (!playerList || (*playerList).Count == 1) FAIL_CONTINUE("playerList");
 
 		std::vector<Entity_t> temp_entities;
+
+		std::optional<Entity_t> closest_entity;
+		float current_min_distance = FLT_MAX;
 
 		for (int i = 0; i < (*playerList).Count; i++)
 		{
@@ -82,9 +89,32 @@ void cache::cache_data()
 			entity.player_name = std::format("[{}m] {}", roundf(entity.Distance / cache::world_to_meters), playerState->get_player_name());
 			entity.player_bones = BoneCluster(entity.Mesh);
 			entity.component_to_world = mesh->get_component_to_world();
+			
+			entity.is_visible = mesh->was_recently_rendered();
+
+			if (config::config->data()->aim && entity.Team != cache::LocalTeam && entity.HealthComponentData.bIsAlive && !entity.HealthComponentData.bHealthProtection && entity.HealthComponentData.Health != 0)
+			{
+				Vector3 head_position = entity.get_bone_with_rotation(Bones::Head);
+				if (head_position) {
+					Vector2Float screen_head_position = world_to_screen(head_position);
+					if (screen_head_position)
+					{
+						Vector2Float center_screen = { data::ScreenCenterX, data::ScreenCenterY };
+						float distance2d = center_screen.Distance(screen_head_position);
+						if (current_min_distance > distance2d) {
+							if (!config::config->data()->fov || config::config->data()->fov_value > distance2d) {
+								closest_entity = entity;
+								current_min_distance = distance2d;
+							}
+						}
+					}
+				}
+			}
 
 			temp_entities.push_back(entity);
 		}
+
+		cache::closest_entity = closest_entity;
 
 		cache::entities = temp_entities;
 		count++;
@@ -94,6 +124,8 @@ void cache::cache_data()
 		float elapsedSeconds = std::chrono::duration<float>(end-start).count();
 
 		data::cache_per_second = count / elapsedSeconds;
+
+		modules::aimbot();
 
 		exploits::infinite_stamina();
 		exploits::rapid_fire();

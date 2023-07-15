@@ -31,15 +31,23 @@ std::string get_name_by_index(uint32_t Index)
 	uint64_t DataPtr = (uint64_t)EntryPtr + HeadersSizeOffset;
 
 	if (wide) {
-		std::wstring buf(L"\0", len);
+		wchar_t buf[1024];
 
-		if (!driver::read(DataPtr, (uintptr_t)buf.data(), len * 2ull)) {
+		if (!driver::read(DataPtr, (uintptr_t)buf, len * 2ull)) {
 			return std::string();
 		}
 
-		std::string result(buf.begin(), buf.end());
-		FNamePool::Cache.insert(std::make_pair(Index, result));
-		return result;
+		int bufferSize = WideCharToMultiByte(CP_ACP, 0, buf, -1, NULL, 0, NULL, NULL);
+		char* narrowString = new char[bufferSize];
+		WideCharToMultiByte(CP_ACP, 0, buf, -1, narrowString, bufferSize, NULL, NULL);
+
+		std::string out = std::string(narrowString, bufferSize);
+		
+		delete[] narrowString;
+
+		//std::string result(buf.begin(), buf.end());
+		FNamePool::Cache.insert(std::make_pair(Index, out));
+		return out;
 	}
 	else {
 		std::string data("\0", len);

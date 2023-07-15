@@ -164,6 +164,7 @@ void overlay::esp::draw_player_name(Entity_t ent)
 	if (!root_world_loc) return;
 
 	Vector2Float root_screen = world_to_screen(root_world_loc);
+	if (!root_screen) return;
 
 	ImVec2 text_size = ImGui::CalcTextSize(ent.player_name.c_str());
 	ImGui::GetBackgroundDrawList()->AddText(ImVec2(root_screen.x - (text_size.x / 2), root_screen.y + 2), get_color_from_float_array(player_name_color), ent.player_name.c_str());

@@ -21,3 +21,16 @@ FBoxSphereBounds USceneComponent::get_cached_bounds(void)
 
 	return Bounds;
 }
+
+render_info_t USceneComponent::get_render_data(void)
+{
+	if (!this) return { 0 };
+	ONCE_GET_OFFSET("/Script/Engine.PrimitiveComponent", "BoundsScale", BoundsScaleOffset);
+	if (!BoundsScaleOffset) return { 0 };
+
+	RPM(render_info_t, (uintptr_t)this + BoundsScaleOffset + sizeof(float), RenderInfo);
+
+	if (!RenderInfoSuccess) return { 0 };
+
+	return RenderInfo;
+}

@@ -2,6 +2,7 @@
 
 #include <libconfig.hpp>
 #include <ressources/window_constants.h>
+#include <game.hpp>
 
 #define RPM(type, address, varName) auto [varName, varName##Success] = driver::read<type>(address);
 
@@ -51,6 +52,10 @@ namespace config {
 		bool skeleton_esp;
 		float skeleton_esp_color[4];
 		float skeleton_thickness;
+		float fov_circle_color[4];
+		bool aim_tracer;
+		float esp_visible_color[4];
+		int aim_bone = Bones::Head;
 	};
 
 	inline libconfig::ConfigurationLoader<config_t>* config = new libconfig::ConfigurationLoader<config_t>("polygon");

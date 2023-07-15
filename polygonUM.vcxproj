@@ -151,6 +151,7 @@
     <ClCompile Include="lib\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\aactor.cpp" />
     <ClCompile Include="src\agamestate.cpp" />
+    <ClCompile Include="src\aimbot.cpp" />
     <ClCompile Include="src\aitemgungeneral.cpp" />
     <ClCompile Include="src\apawn.cpp" />
     <ClCompile Include="src\aplayercameramanager.cpp" />
