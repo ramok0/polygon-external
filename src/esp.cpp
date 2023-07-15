@@ -31,7 +31,7 @@ void DrawCorneredBox(float X, float Y, float W, float H, const ImColor& lineColo
 	DrawList->AddLine(ImVec2(X + W, Y + H - lineH), ImVec2(X + W, Y + H), lineColor, 3.f);
 }
 
-void overlay::esp::draw_2d_bounding_esp(Entity_t ent)
+void overlay::esp::draw_2d_bounding(Entity_t ent)
 {
 	if (!config::config->data()->esp) return;
 	FBoxSphereBounds bounds = ent.RootComponent->get_cached_bounds();
@@ -42,11 +42,7 @@ void overlay::esp::draw_2d_bounding_esp(Entity_t ent)
 	Vector2Float screen_bottom_left = world_to_screen(bottomLeft);
 	Vector2Float screen_top_right = world_to_screen(topRight);
 
-	if (config::config->data()->esp_filled)
-	{
-		float* esp_filled_color = config::config->data()->esp_filled_color;
-		ImGui::GetBackgroundDrawList()->AddRectFilled({ screen_top_right.x, screen_top_right.y }, { screen_bottom_left.x, screen_bottom_left.y }, ImColor(esp_filled_color[0], esp_filled_color[1], esp_filled_color[2], esp_filled_color[3]));
-	}
+	esp::draw_filled(screen_top_right, screen_bottom_left);
 
 	float* esp_color = config::config->data()->esp_color;
 	ImGui::GetBackgroundDrawList()->AddRect({ screen_top_right.x, screen_top_right.y }, { screen_bottom_left.x, screen_bottom_left.y }, ImColor(esp_color[0], esp_color[1], esp_color[2], esp_color[3]));
@@ -70,17 +66,13 @@ void overlay::esp::draw_2d_corner(Entity_t ent)
 
 	float CornerHeight = abs(headBox.y - bottomLoc.y);
 	float CornerWidth = CornerHeight * 0.75f;
+	float X = headBox.x - (CornerWidth / 2);
 
-	if (config::config->data()->esp_filled)
-	{
-		float* esp_filled_color = config::config->data()->esp_filled_color;
-		float X = headBox.x - (CornerWidth / 2);
-		ImGui::GetBackgroundDrawList()->AddRectFilled({ (float)X, (float)headBox.y }, ImVec2(X + CornerWidth, headBox.y + CornerHeight), ImColor(esp_filled_color[0], esp_filled_color[1], esp_filled_color[2], esp_filled_color[3]));
-	}
+	esp::draw_filled({ (float)X, (float)headBox.y }, ImVec2(X + CornerWidth, headBox.y + CornerHeight));
 
 	float* esp_color = config::config->data()->esp_color;
 
-	ImColor color{ esp_color[0], esp_color[1], esp_color[2], esp_color[3] };
+	ImColor color = get_color_from_float_array(esp_color);
 
 	DrawCorneredBox(headBox.x - (CornerWidth / 2), headBox.y, CornerWidth, CornerHeight, color, 1.5f);
 }
@@ -103,19 +95,15 @@ void overlay::esp::draw_2d(Entity_t ent)
 
 	float X = headBox.x - (CornerWidth / 2);
 
-	if (config::config->data()->esp_filled)
-	{
-		float* esp_filled_color = config::config->data()->esp_filled_color;
-		ImGui::GetBackgroundDrawList()->AddRectFilled({ (float)X, (float)headBox.y }, ImVec2(X + CornerWidth, headBox.y + CornerHeight), ImColor(esp_filled_color[0], esp_filled_color[1], esp_filled_color[2], esp_filled_color[3]));
-	}
+	esp::draw_filled({ (float)X, (float)headBox.y }, ImVec2(X + CornerWidth, headBox.y + CornerHeight));
 
 	float* esp_color = config::config->data()->esp_color;
-	ImColor color{ esp_color[0], esp_color[1], esp_color[2], esp_color[3] };
+	ImColor color = get_color_from_float_array(esp_color);
 
 	ImGui::GetBackgroundDrawList()->AddRect({ (float)X, (float)headBox.y }, ImVec2(X + CornerWidth, headBox.y + CornerHeight), color);
 }
 
-void overlay::esp::draw3d_esp(Entity_t ent)
+void overlay::esp::draw_3d(Entity_t ent)
 {
 	if (!config::config->data()->esp) return;
 	ImDrawList* drawList = ImGui::GetBackgroundDrawList();
@@ -146,10 +134,7 @@ void overlay::esp::draw3d_esp(Entity_t ent)
 	ImColor color = ImColor(esp_color[0], esp_color[1], esp_color[2], esp_color[3]);
 
 	if (topFrontLeftScreen.x || topFrontLeftScreen.y) {
-		if (config::config->data()->esp_filled) {
-			float* esp_filled_color = config::config->data()->esp_filled_color;
-			drawList->AddRectFilled({ topRightScreen.x, topRightScreen.y }, { bottomRightScreen.x, bottomRightScreen.y }, ImColor(esp_filled_color[0], esp_filled_color[1], esp_filled_color[2], esp_filled_color[3]));
-		}
+		esp::draw_filled(topRightScreen, bottomRightScreen);
 
 		drawList->AddLine({ bottomRightScreen.x, bottomRightScreen.y }, { bottomFrontRightScreen.x, bottomFrontRightScreen.y }, color);
 		drawList->AddLine({ bottomRightScreen.x, bottomRightScreen.y }, { bottomBackLeftScreen.x,bottomBackLeftScreen.y }, color);
@@ -181,7 +166,7 @@ void overlay::esp::draw_player_name(Entity_t ent)
 	Vector2Float root_screen = world_to_screen(root_world_loc);
 
 	ImVec2 text_size = ImGui::CalcTextSize(ent.player_name.c_str());
-	ImGui::GetBackgroundDrawList()->AddText(ImVec2(root_screen.x - (text_size.x / 2), root_screen.y + 2), ImColor(player_name_color[0], player_name_color[1], player_name_color[2], player_name_color[3]), ent.player_name.c_str());
+	ImGui::GetBackgroundDrawList()->AddText(ImVec2(root_screen.x - (text_size.x / 2), root_screen.y + 2), get_color_from_float_array(player_name_color), ent.player_name.c_str());
 }
 
 void overlay::esp::draw_skeleton(Entity_t ent)
@@ -191,8 +176,6 @@ void overlay::esp::draw_skeleton(Entity_t ent)
 		return;
 
 	ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
-
-	std::map<int, Vector2Float> bone_cache;
 
 	float* skeleton_color = configData.skeleton_esp_color;
 	float skeleton_thickness = configData.skeleton_thickness;
@@ -221,80 +204,21 @@ void overlay::esp::draw_skeleton(Entity_t ent)
 		draw_list->AddLine(ImVec2(firstBoneScreen.x, firstBoneScreen.y), ImVec2(secondBoneScreen.x, secondBoneScreen.y), SkeletonColor, skeleton_thickness);
 	}
 }
-//
-//void overlay::esp::draw_skeleton(Entity_t ent)
-//{
-//	if (!config::config->data()->esp || !config::config->data()->skeleton_esp) {
-//		return;
-//	}
-//
-//
-//
-//	ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
-//
-//	Bones HeadValue = Bones::Head;
-//	Bones RightShoulderValue = Bones::upperarm_r;
-//	Bones LeftShoulderValue = Bones::upperarm_l;
-//	Bones ChestValue = Bones::spine_03;
-//
-//	Bones RightStartOfLegValue = Bones::thigh_r;
-//	Bones LeftStartOfLegValue = Bones::thigh_l;
-//
-//	USkeletalMeshComponent* Mesh = ent.Mesh;
-//
-//
-//
-//
-//	SAFE_W2S(Mesh, HeadPosition, HeadValue);
-//	SAFE_W2S(Mesh, NeckPosition, HeadValue - 1);
-//	SAFE_W2S(Mesh, RootPosition, Bones::Root);
-//
-//	SAFE_W2S(Mesh, RightShoulder, RightShoulderValue);
-//	SAFE_W2S(Mesh, LeftShoulder, LeftShoulderValue);
-//	SAFE_W2S(Mesh, RightElbow, RightShoulderValue + 1);
-//	SAFE_W2S(Mesh, LeftElbow, LeftShoulderValue + 1);
-//	SAFE_W2S(Mesh, RightArm, RightShoulderValue + 2);
-//	SAFE_W2S(Mesh, LeftArm, LeftShoulderValue + 2);
-//
-//	SAFE_W2S(Mesh, EndPelvis, Bones::pelvis);
-//	SAFE_W2S(Mesh, Chest, ChestValue);
-//	SAFE_W2S(Mesh, Tummy, ChestValue - 1);
-//	SAFE_W2S(Mesh, Pelvis, ChestValue - 2);
-//
-//	SAFE_W2S(Mesh, RightStartOfLeg, RightStartOfLegValue);
-//	SAFE_W2S(Mesh, LeftStartOfLeg, LeftStartOfLegValue);
-//	SAFE_W2S(Mesh, RightKnee, RightStartOfLegValue + 1);
-//	SAFE_W2S(Mesh, LeftKnee, LeftStartOfLegValue + 1);
-//	SAFE_W2S(Mesh, RightHeel, RightStartOfLegValue + 2);
-//	SAFE_W2S(Mesh, LeftHeel, LeftStartOfLegValue + 2);
-//	SAFE_W2S(Mesh, RightToe, RightStartOfLegValue + 3);
-//	SAFE_W2S(Mesh, LeftToe, LeftStartOfLegValue + 3);
-//
-//	float* skeleton_esp_color = config::config->data()->skeleton_esp_color;
-//
-//	ImColor SkeletonColor = ImColor(skeleton_esp_color[0], skeleton_esp_color[1], skeleton_esp_color[2], skeleton_esp_color[3]);
-//	float SkeletonTickens = config::config->data()->skeleton_thickness;
-//
-//	draw_list->AddLine(ImVec2(HeadPosition.x, HeadPosition.y), ImVec2(NeckPosition.x, NeckPosition.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DE LA TÊTE AU COU
-//	draw_list->AddLine(ImVec2(NeckPosition.x, NeckPosition.y), ImVec2(Chest.x, Chest.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU COU AU DÉBUT DE LA POITRINE
-//	draw_list->AddLine(ImVec2(Chest.x, Chest.y), ImVec2(Tummy.x, Tummy.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU DÉBUT DE LA POITRINE AU VENTRE
-//	draw_list->AddLine(ImVec2(Tummy.x, Tummy.y), ImVec2(EndPelvis.x, EndPelvis.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU VENTRE À L'ENTREJAMBE
-//	draw_list->AddLine(ImVec2(EndPelvis.x, EndPelvis.y), ImVec2(RightStartOfLeg.x, RightStartOfLeg.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DE L'ENTREJAMBE AU DÉBUT DE LA JAMBE DROITE
-//	draw_list->AddLine(ImVec2(EndPelvis.x, EndPelvis.y), ImVec2(LeftStartOfLeg.x, LeftStartOfLeg.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DE L'ENTREJAMBE AU DÉBUT DE LA JAMBE GAUCHE
-//	draw_list->AddLine(ImVec2(RightStartOfLeg.x, RightStartOfLeg.y), ImVec2(RightKnee.x, RightKnee.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU DÉBUT DE LA JAMBE DROITE AU GENOU
-//	draw_list->AddLine(ImVec2(LeftStartOfLeg.x, LeftStartOfLeg.y), ImVec2(LeftKnee.x, LeftKnee.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU DÉBUT DE LA JAMBE GAUCHE AU GENOU
-//	draw_list->AddLine(ImVec2(RightKnee.x, RightKnee.y), ImVec2(RightHeel.x, RightHeel.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU GENOU AU TALON DROIT
-//	draw_list->AddLine(ImVec2(LeftKnee.x, LeftKnee.y), ImVec2(LeftHeel.x, LeftHeel.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU GENOU AU TALON GAUCHE
-//	draw_list->AddLine(ImVec2(RightHeel.x, RightHeel.y), ImVec2(RightToe.x, RightToe.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU TALON À L'ORTEIL DROIT
-//	draw_list->AddLine(ImVec2(LeftHeel.x, LeftHeel.y), ImVec2(LeftToe.x, LeftToe.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU TALON À L'ORTEIL GAUCHE
-//	draw_list->AddLine(ImVec2(NeckPosition.x, NeckPosition.y), ImVec2(RightShoulder.x, RightShoulder.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU COU À L'ÉPAULE DROITE
-//	draw_list->AddLine(ImVec2(NeckPosition.x, NeckPosition.y), ImVec2(LeftShoulder.x, LeftShoulder.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU COU À L'ÉPAULE GAUCHE
-//	draw_list->AddLine(ImVec2(RightShoulder.x, RightShoulder.y), ImVec2(RightElbow.x, RightElbow.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DE L'ÉPAULE DROITE AU COUDE DROIT
-//	draw_list->AddLine(ImVec2(LeftShoulder.x, LeftShoulder.y), ImVec2(LeftElbow.x, LeftElbow.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DE L'ÉPAULE GAUCHE AU COUDE GAUCHE
-//	draw_list->AddLine(ImVec2(RightElbow.x, RightElbow.y), ImVec2(RightArm.x, RightArm.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU COUDE DROIT À LA MAIN DROITE
-//	draw_list->AddLine(ImVec2(LeftElbow.x, LeftElbow.y), ImVec2(LeftArm.x, LeftArm.y), SkeletonColor, SkeletonTickens); // DESSINE LA LIGNE DU COUDE GAUCHE À LA MAIN GAUCHE
-//
-//}
+
+void overlay::esp::draw_filled(ImVec2 top, ImVec2 bottom)
+{
+	if (!config::config->data()->esp_filled)
+		return;
+
+	float* esp_filled_color = config::config->data()->esp_filled_color;
+	ImColor color = get_color_from_float_array(esp_filled_color);
+	ImGui::GetBackgroundDrawList()->AddRectFilled(top, bottom, color);
+}
+
+void overlay::esp::draw_filled(Vector2Float top, Vector2Float bottom)
+{
+	return draw_filled(ImVec2(top.x, top.y), ImVec2(bottom.x, bottom.y));
+}
 
 std::function<void(Entity_t)> overlay::esp::get_method(void)
 {
@@ -303,13 +227,13 @@ std::function<void(Entity_t)> overlay::esp::get_method(void)
 		return draw_2d;
 		break;
 	case ESP_2DBOUNDING:
-		return draw_2d_bounding_esp;
+		return draw_2d_bounding;
 		break;
 	case ESP_2DCORNER:
 		return draw_2d_corner;
 		break;
 	case ESP_3D:
-		return draw3d_esp;
+		return draw_3d;
 		break;
 	}
 
