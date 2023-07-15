@@ -78,11 +78,10 @@ void cache::cache_data()
 			entity.RootComponent = rootComponent;
 			entity.HealthComponentData = *healthData;
 			entity.Team = playerState->get_team_number();
-			entity.player_name = std::format("[{}m] {}", roundf((float)cache::view_info.Location.Distance(rootComponent->relative_location()) / cache::world_to_meters), playerState->get_player_name());
-			entity.player_bones = (*bones).read_every_elements();
+			entity.Distance = (float)cache::view_info.Location.Distance(rootComponent->relative_location());
+			entity.player_name = std::format("[{}m] {}", roundf(entity.Distance / cache::world_to_meters), playerState->get_player_name());
+			entity.player_bones = BoneCluster(entity.Mesh);
 			entity.component_to_world = mesh->get_component_to_world();
-
-			//	entity.bones = mesh->get_bones(&entity.bones_count);
 
 			temp_entities.push_back(entity);
 		}
@@ -96,11 +95,12 @@ void cache::cache_data()
 
 		data::cache_per_second = count / elapsedSeconds;
 
-		//exploits::infinite_stamina();
-		//exploits::rapid_fire();
-		//exploits::instantaim();
-		//exploits::no_recoil();
-		//exploits::no_spread();
+		exploits::infinite_stamina();
+		exploits::rapid_fire();
+		exploits::instantaim();
+		exploits::no_recoil();
+		exploits::no_spread();
+		exploits::fast_move();
 
 	//	Sleep(1000 / 300);
 	}

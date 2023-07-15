@@ -33,26 +33,16 @@ struct TArray {
 		return buffer;
 	}
 
-	std::vector<T> read_every_elements() {
+	T* read_every_elements() {
 		T* bufferData = new T[Count];
 
 		if(!driver::read((uintptr_t)Data, (uintptr_t)bufferData, (uintptr_t)(sizeof(T) * Count)))
 		{
 			delete[] bufferData;
-			return std::vector<T>();
+			return nullptr;
 		}
 
-		std::vector<T> result;
-		result.reserve(sizeof(T) * Count);
-
-		for (int i = 0; i < Count; i++)
-		{
-			result.push_back(bufferData[i]);
-		}
-
-		delete[] bufferData;
-
-		return result;
+		return bufferData;
 	}
 };
 

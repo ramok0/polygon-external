@@ -3,6 +3,7 @@
 #include <polygon.hpp>
 #include <objects.h>
 #include <ue4structs.hpp>
+#include <memory>
 
 #define UNIQUE_VARAIBLE_NAME(base) base
 
@@ -38,6 +39,7 @@ enum class EPG_GameState : uint8_t {
 class AItem_Gun_General {
 public:
 	float get_time_between_shots(void);
+	float get_mobility(void);
 };
 
 class UInventoryComponent_Game {
@@ -142,6 +144,68 @@ public:
 	class APlayerController* get_player_controller(void);
 };
 
+
+struct BoneCluster {
+
+	BoneCluster() {
+		this->m_count = 0;
+		this->m_data = nullptr;
+	}
+
+	BoneCluster& operator=(const BoneCluster& other)
+	{
+		if (this != &other)
+		{
+			m_count = other.m_count;
+			m_data = std::unique_ptr<FTransform[]>(new FTransform[m_count]);
+			std::memcpy(m_data.get(), other.m_data.get(), sizeof(FTransform) * m_count);
+		}
+		return *this;
+	}
+
+	BoneCluster(const BoneCluster& other)
+		: m_count(other.m_count),
+		m_data(new FTransform[other.m_count])
+	{
+		std::memcpy(m_data.get(), other.m_data.get(), sizeof(FTransform) * m_count);
+	}
+
+	BoneCluster(USkeletalMeshComponent* Mesh) {
+		auto array = Mesh->get_bone_array();
+		if (!array)
+		{
+			this->m_count = 0;
+			this->m_data = nullptr;
+		}
+		else {
+			this->m_count = array.value().Count;
+
+			FTransform* el = array->read_every_elements();
+
+			this->m_data = std::unique_ptr<FTransform[]>(new FTransform[this->m_count]);
+			std::memcpy(this->m_data.get(), el, sizeof(FTransform) * this->m_count);
+			
+			delete[] el;
+		}
+	}
+
+	int size() {
+		return this->m_count;
+	}
+
+	FTransform operator[](int Index) {
+		if (Index > size()) {
+			throw std::runtime_error("Not existing element");
+		}
+
+		return this->m_data[Index];
+	}
+
+	int m_count;
+	std::unique_ptr<FTransform[]> m_data;
+};
+
+
 Vector2Float world_to_screen(Vector3 world_location);
 
 void cache_offsets(void);
@@ -155,5 +219,7 @@ namespace exploits {
 	void no_spread(void);
 	void no_recoil(void);
 	void instantaim();
+	void fast_move();
 	float get_original_time_between_shots(void);
+	float get_original_mobility(void);
 }

@@ -14,6 +14,7 @@ void exploits::infinite_stamina(void)
 }
 
 inline std::unordered_map<void*, float> original_time_between_shots;
+inline std::unordered_map<void*, float> original_mobility;
 
 void exploits::rapid_fire()
 {
@@ -63,6 +64,24 @@ void exploits::instantaim()
 	if (!cache::LocalCurrentWeapon) return;
 
 	driver::write<float>((uintptr_t)cache::LocalCurrentWeapon + AimDownTimeMultiplierOffset, 1000.f);
+}
+
+void exploits::fast_move()
+{
+	if (!config::config->data()->fast_move) return;
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "Mobility", MobilityOffset);
+	if (!MobilityOffset || !cache::LocalCurrentWeapon) return;
+
+	if (!original_mobility.contains(cache::LocalCurrentWeapon)) {
+		original_mobility[cache::LocalCurrentWeapon] = cache::LocalCurrentWeapon->get_mobility();
+	}
+
+	driver::write<float>((uintptr_t)cache::LocalCurrentWeapon + MobilityOffset, original_mobility[cache::LocalCurrentWeapon] * 2.f);
+}
+
+float exploits::get_original_mobility(void)
+{
+	return original_mobility.contains(cache::LocalCurrentWeapon) ? original_mobility[cache::LocalCurrentWeapon] : 0;
 }
 
 float exploits::get_original_time_between_shots(void)

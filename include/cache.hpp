@@ -8,14 +8,16 @@
 	}
 
 struct Entity_t {
+
 	APawn* Pawn;
 	USceneComponent* RootComponent;
 	APlayerState* PlayerState;
 	USkeletalMeshComponent* Mesh;
 	HealthStatsComponentData HealthComponentData;
 	uint8_t Team;
+	float Distance;
 	std::string player_name;
-	std::vector<FTransform> player_bones;
+	BoneCluster player_bones;
 	FTransform component_to_world;
 
 	Vector3 get_bone_with_rotation(int Index) {

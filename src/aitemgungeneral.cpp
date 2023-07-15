@@ -7,3 +7,11 @@ float AItem_Gun_General::get_time_between_shots(void)
 
 	return driver::unsafe_read<float>((uintptr_t)this + TimeBetweenShotsOffset);
 }
+
+float AItem_Gun_General::get_mobility(void)
+{
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "Mobility", MobilityOffset);
+	if (!MobilityOffset) return 0.f;
+
+	return driver::unsafe_read<float>((uintptr_t)this + MobilityOffset);
+}
