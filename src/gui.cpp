@@ -69,6 +69,7 @@ void gui::draw_menu(void)
 		ImGui::Spacing();
 
 		ImGui::Checkbox("Enable ESP", &data->esp);
+		ImGui::Checkbox("Enable Skeleton ESP", &data->skeleton_esp);
 		ImGui::Checkbox("Enable ESP Filled", &data->esp_filled);
 		ImGui::Checkbox("Enable Names ESP", &data->esp_player_name);
 		if (data->esp) {
@@ -82,6 +83,14 @@ void gui::draw_menu(void)
 			ImGui::SameLine();
 			ImGui::Text("ESP Filled Color");
 		}	
+
+		if (data->skeleton_esp) {
+			ImGui::ColorEdit4("##skeleton_esp_color", data->skeleton_esp_color, ImGuiColorEditFlags_NoInputs);
+			ImGui::SameLine();
+			ImGui::Text("Skeleton Color");
+
+			ImGui::SliderFloat("Skeleton Thickness", &data->skeleton_thickness, 0.2f, 2.5f);
+		}
 		
 		if (data->esp_player_name) {
 			ImGui::ColorEdit4("##namescolor", data->esp_player_name_color, ImGuiColorEditFlags_NoInputs);

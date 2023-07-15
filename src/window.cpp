@@ -1,5 +1,6 @@
 #include <polygon.hpp>
 #include <ue4.hpp>
+#include <overlay.hpp>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 

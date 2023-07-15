@@ -8,28 +8,17 @@ std::optional<TArray<FTransform>> USkeletalMeshComponent::get_bone_array(void)
 
 	TArray<FTransform> bone_array = bones_array.ComponentSpaceTransformsArray[0].Data && bones_array.ComponentSpaceTransformsArray[0].Count != 0 ? bones_array.ComponentSpaceTransformsArray[0] : bones_array.ComponentSpaceTransformsArray[1];
 
-	
-
 	return bone_array;
 }
 
-std::shared_ptr<FTransform> USkeletalMeshComponent::get_bones(void)
+Vector3 USkeletalMeshComponent::get_bone_with_rotation(int Index)
 {
+	if (this == nullptr) return { 0 };
+
 	auto bone_array = this->get_bone_array();
-	if (!bone_array) return nullptr;
+	if (!bone_array) return { 0 };
 
-	return (*bone_array).read_every_elements();
-}
-
-Vector3 USkeletalMeshComponent::get_bone_with_rotation(FTransform bone)
-{
-	if (this == nullptr) return { 0,0,0 };
-
-	//std::optional<TArray<FTransform>> bone_array = this->get_bone_array(); 0x10
-	//if (!bone_array) return { 0,0,0 };
-
-	////FTransform bone = driver::unsafe_read<FTransform>((uintptr_t)bone_array.value().Data + (0x60 * Index)); 0x60
-	//FTransform bone = (*bone_array)[Index];
+	FTransform bone = (*bone_array)[Index];
 	FTransform component_to_world = this->get_component_to_world();
 
 	FMatrix matrix = bone.ToMatrixWithScale() * component_to_world.ToMatrixWithScale();
@@ -39,9 +28,6 @@ Vector3 USkeletalMeshComponent::get_bone_with_rotation(FTransform bone)
 
 FTransform USkeletalMeshComponent::get_component_to_world(void)
 {
-	//RPM(FTransform, (uintptr_t)this + offsets::component_to_world, ComponentToWorld);
-	//if (!ComponentToWorldSuccess || !ComponentToWorld) return { 0 };
-	//return ComponentToWorld;
 	FTransform ComponentToWorld = driver::unsafe_read<FTransform>((uintptr_t)this + offsets::component_to_world);
 	return ComponentToWorld;
 }

@@ -1,5 +1,5 @@
 #include <ue4.hpp>
-#include <cache.hpp>
+#include <overlay.hpp>
 
 void overlay::draw(void) {
 	config::config_t* data = config::config->data();
@@ -7,29 +7,18 @@ void overlay::draw(void) {
 		if (entity.HealthComponentData.bIsAlive == false || entity.HealthComponentData.Health == 0) continue;
 		if (data->team_check && cache::LocalTeam == entity.Team) continue;
 
-		FTransform* bones = entity.bones.get();
+		//Vector3 loc = entity.Mesh->get_bone_with_rotation(8);
+		//auto screen = world_to_screen(loc);
 
-		switch (data->esp_mode) {
-		case ESP_MODE::ESP_3D:
-			overlay::draw3d_esp(entity.RootComponent);
-			break;
-		case ESP_MODE::ESP_2DCORNER:
-			overlay::draw_2d_corner(entity.Mesh, bones);
-			break;
-		case ESP_MODE::ESP_2D:
-			overlay::draw_2d(entity.Mesh, bones);
-			break;	
-		default:
-		case ESP_MODE::ESP_2DBOUNDING:
-			overlay::draw_2d_bounding_esp(entity.RootComponent);
-			break;
-		}
+		//ImGui::GetBackgroundDrawList()->AddLine({ 0.f, 0.f }, { screen.x, screen.y }, ImColor(255, 0, 0));
+
+		overlay::esp::get_method()(entity);
+
+		if (data->skeleton_esp)
+			overlay::esp::draw_skeleton(entity);
 		
-		if (data->esp_player_name) {
-			overlay::draw_player_name(entity.Mesh, bones, entity.player_name);
-		}
-
-		//overlay::draw3d_esp(entity.RootComponent);
+		if (data->esp_player_name)
+			overlay::esp::draw_player_name(entity);
 	}
 
 	if (data->debug_info) {

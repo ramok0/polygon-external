@@ -12,6 +12,16 @@ void cache::cache_data()
 		UWorld* World = get_world();
 		if (!World) FAIL_CONTINUE("World");
 
+		AGameState* GameState = World->get_game_state();
+
+		cache::GameStatus = GameState->get_game_status();
+
+		if (cache::GameStatus != EPG_GameState::GAME) {
+			cache::entities.clear();
+			FAIL_CONTINUE("GameStatus");
+		}
+		
+
 		APlayerController* LocalPlayerController = World->get_game_instance()->get_local_player()->get_player_controller();
 
 		if (!LocalPlayerController) FAIL_CONTINUE("LocalPlayerController");
@@ -34,8 +44,10 @@ void cache::cache_data()
 		cache::LocalHealthStatsComponent = LocalPawn->get_health_component();
 		cache::LocalCurrentWeapon = LocalPlayerState->get_inventory()->get_current_weapon();
 
+		cache::world_to_meters = World->get_persistent_level()->get_world_settings()->get_world_to_meters();
+
 		//cache players
-		std::optional<TArray<APlayerState*>> playerList = World->get_game_state()->get_player_array();
+		std::optional<TArray<APlayerState*>> playerList = GameState->get_player_array();
 		if (!playerList || (*playerList).Count == 1) FAIL_CONTINUE("playerList");
 
 		std::vector<Entity_t> temp_entities;
@@ -45,9 +57,13 @@ void cache::cache_data()
 			APlayerState* playerState = (*playerList)[i];
 			APawn* pawn = playerState->get_pawn();
 			if (!pawn || pawn == LocalPawn) continue;
+			if (playerState == LocalPlayerState) continue;
 
 			USkeletalMeshComponent* mesh = pawn->get_mesh();
 			if (!mesh) continue;
+
+			std::optional<TArray<FTransform>> bones = mesh->get_bone_array();
+			if (!bones) continue;
 
 			std::optional<HealthStatsComponentData> healthData = pawn->get_health_component()->get_data();
 			if (!healthData) continue;
@@ -62,8 +78,11 @@ void cache::cache_data()
 			entity.RootComponent = rootComponent;
 			entity.HealthComponentData = *healthData;
 			entity.Team = playerState->get_team_number();
-			entity.player_name = playerState->get_player_name();
-			entity.bones = mesh->get_bones();
+			entity.player_name = std::format("[{}m] {}", roundf((float)cache::view_info.Location.Distance(rootComponent->relative_location()) / cache::world_to_meters), playerState->get_player_name());
+			entity.player_bones = (*bones).read_every_elements();
+			entity.component_to_world = mesh->get_component_to_world();
+
+			//	entity.bones = mesh->get_bones(&entity.bones_count);
 
 			temp_entities.push_back(entity);
 		}
@@ -77,11 +96,11 @@ void cache::cache_data()
 
 		data::cache_per_second = count / elapsedSeconds;
 
-		exploits::infinite_stamina();
-		exploits::rapid_fire();
-		exploits::instantaim();
-		exploits::no_recoil();
-		exploits::no_spread();
+		//exploits::infinite_stamina();
+		//exploits::rapid_fire();
+		//exploits::instantaim();
+		//exploits::no_recoil();
+		//exploits::no_spread();
 
 	//	Sleep(1000 / 300);
 	}

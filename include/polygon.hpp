@@ -5,7 +5,6 @@
 
 #define RPM(type, address, varName) auto [varName, varName##Success] = driver::read<type>(address);
 
-
 namespace data {
 	inline bool menu_open;
 	inline HWND gameWindow;
@@ -21,6 +20,7 @@ namespace data {
 	inline float ScreenCenterY;
 	inline WINDOW_TABS current_tab;
 	inline float cache_per_second;
+	inline float world_to_meters;
 }
 
 namespace config {
@@ -48,6 +48,9 @@ namespace config {
 		bool fast_move;
 		float time_between_shots;
 		bool instant_aim;
+		bool skeleton_esp;
+		float skeleton_esp_color[4];
+		float skeleton_thickness;
 	};
 
 	inline libconfig::ConfigurationLoader<config_t>* config = new libconfig::ConfigurationLoader<config_t>("polygon");
@@ -62,6 +65,8 @@ namespace window {
 	void tick(GLFWwindow* window);
 	void cleanup(GLFWwindow* window);
 }
+
+ImColor get_color_from_float_array(float* color);
 
 namespace driver {
 	bool init(void);

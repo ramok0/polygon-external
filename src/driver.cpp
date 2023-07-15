@@ -76,4 +76,5 @@ bool driver::write(uintptr_t address, uintptr_t buffer, uintptr_t size)
 
 	bResult = DeviceIoControl(data::driver_handle, IOCTL_WRITE_MEM, &wpm, sizeof(wpm), (LPVOID)buffer, (DWORD)size, &bytesReturned, (LPOVERLAPPED)NULL);
 
+	return bResult;
 }

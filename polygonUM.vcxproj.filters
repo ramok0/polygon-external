@@ -22,16 +22,16 @@
     <Filter Include="Source Files\libs\imgui">
       <UniqueIdentifier>{1cd95752-dc60-4f44-bd94-2ef313a86081}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\rendering\modules">
-      <UniqueIdentifier>{e7734590-1899-45d4-870f-a05495861135}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ressources">
       <UniqueIdentifier>{49eacaa0-22f5-47e4-8ba4-6c2cee3c377f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\rendering\ue4">
+    <Filter Include="Source Files\modules">
+      <UniqueIdentifier>{e7734590-1899-45d4-870f-a05495861135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ue4">
       <UniqueIdentifier>{f5d9aed6-a3e9-42d2-89e5-f5fd1c382bb4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\rendering\ue4\wrappers">
+    <Filter Include="Source Files\ue4\wrappers">
       <UniqueIdentifier>{2bf4afd8-c9d8-4b92-b1fc-6db1824fefa2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -79,73 +79,82 @@
       <Filter>Source Files\rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\ue4.cpp">
-      <Filter>Source Files\rendering\ue4</Filter>
+      <Filter>Source Files\ue4</Filter>
     </ClCompile>
     <ClCompile Include="src\objects.cpp">
-      <Filter>Source Files\rendering\ue4</Filter>
+      <Filter>Source Files\ue4</Filter>
     </ClCompile>
     <ClCompile Include="src\names.cpp">
-      <Filter>Source Files\rendering\ue4</Filter>
+      <Filter>Source Files\ue4</Filter>
     </ClCompile>
     <ClCompile Include="src\uobject.cpp">
-      <Filter>Source Files\rendering\ue4</Filter>
+      <Filter>Source Files\ue4</Filter>
     </ClCompile>
     <ClCompile Include="src\structs.cpp">
-      <Filter>Source Files\rendering\ue4</Filter>
+      <Filter>Source Files\ue4</Filter>
     </ClCompile>
     <ClCompile Include="src\field.cpp">
-      <Filter>Source Files\rendering\ue4</Filter>
+      <Filter>Source Files\ue4</Filter>
     </ClCompile>
     <ClCompile Include="src\ulocalplayer.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\aplayercontroller.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\aplayerstate.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\apawn.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\uworld.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\agamestate.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\ugameinstance.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\uhealthstatscomponent.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\aactor.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\uscenecomponent.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\aplayercameramanager.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\uskeletalmeshcomponent.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\uskinnedasset.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\esp.cpp">
-      <Filter>Source Files\rendering\modules</Filter>
+      <Filter>Source Files\modules</Filter>
     </ClCompile>
     <ClCompile Include="src\expoits.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\uinventorycomponent.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
     <ClCompile Include="src\aitemgungeneral.cpp">
-      <Filter>Source Files\rendering\ue4\wrappers</Filter>
+      <Filter>Source Files\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ulevel.cpp">
+      <Filter>Source Files\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aworldsettings.cpp">
+      <Filter>Source Files\ue4\wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="include\polygon.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +183,12 @@
       <Filter>Header Files\ressources</Filter>
     </ClInclude>
     <ClInclude Include="include\ressources\window_constants.h">
+      <Filter>Header Files\ressources</Filter>
+    </ClInclude>
+    <ClInclude Include="include\overlay.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\skeleton.h">
       <Filter>Header Files\ressources</Filter>
     </ClInclude>
   </ItemGroup>

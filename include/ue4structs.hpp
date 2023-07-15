@@ -1,6 +1,8 @@
 #pragma once
 #include <names.h>
 #include <cstdint>
+#include <vector>
+#include <memory>
 #define M_PI       3.14159265358979323846
 #define DEG_TO_RAD 0.01745329251994329576924
 #define DEG_TO_RAD2 0.008726646259971647884619
@@ -31,16 +33,26 @@ struct TArray {
 		return buffer;
 	}
 
-	std::shared_ptr<T> read_every_elements() {
-		T* buffer = new T[Count];
+	std::vector<T> read_every_elements() {
+		T* bufferData = new T[Count];
 
-		if(!driver::read((uintptr_t)Data, (uintptr_t)buffer, (uintptr_t)(Count * sizeof(T))))
+		if(!driver::read((uintptr_t)Data, (uintptr_t)bufferData, (uintptr_t)(sizeof(T) * Count)))
 		{
-			delete[] buffer;
-			return nullptr;
+			delete[] bufferData;
+			return std::vector<T>();
 		}
 
-		return std::shared_ptr<T>(buffer);
+		std::vector<T> result;
+		result.reserve(sizeof(T) * Count);
+
+		for (int i = 0; i < Count; i++)
+		{
+			result.push_back(bufferData[i]);
+		}
+
+		delete[] bufferData;
+
+		return result;
 	}
 };
 
@@ -76,7 +88,7 @@ struct Vector3 {
 	double y;
 	double z;
 
-	Vector3 operator-(Vector3 other) {
+	Vector3 operator-(Vector3 other) const {
 		return Vector3(this->x - other.x, this->y - other.y, this->z - other.z);
 	}	
 	
@@ -89,6 +101,17 @@ struct Vector3 {
 		return x * v.x + y * v.y + z * v.z;
 	}
 
+	double Size() const
+	{
+		return std::sqrt(x * x + y * y + z * z);
+	}
+
+	double Distance(Vector3 Other) const
+	{
+		return (*this - Other).Size();
+
+	//	return ().Size();
+	}
 
 	operator bool() {
 		return x != 0 && y != 0 && z != 0;

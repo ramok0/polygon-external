@@ -11,3 +11,12 @@ std::optional<TArray<class APlayerState*>> AGameState::get_player_array(void)
 
 	return PlayerArray;
 }
+
+EPG_GameState AGameState::get_game_status(void)
+{
+	if (!this) return EPG_GameState::NONE;
+
+	ONCE_GET_OFFSET("/Script/POLYGON.PG_GameState_Game", "GameState", GameStatusOffset);
+
+	return driver::unsafe_read<EPG_GameState>((uintptr_t)this + GameStatusOffset);
+}

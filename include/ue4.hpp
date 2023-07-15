@@ -25,6 +25,16 @@ inline std::unordered_map<std::string, std::unordered_map<std::string, int32_t>>
 
 constexpr float BOX_REDUCTION_FACTOR = 0.380f;
 
+enum class EPG_GameState : uint8_t {
+	NONE = 0,
+	WAITING_PLAYERS = 1,
+	PAUSE = 2,
+	COUNTDOWN = 3,
+	GAME = 4,
+	ENDED = 5,
+	EPG_MAX = 6
+};
+
 class AItem_Gun_General {
 public:
 	float get_time_between_shots(void);
@@ -54,12 +64,24 @@ public:
 class AGameState {
 public:
 	std::optional<TArray<class APlayerState*>> get_player_array(void);
+	EPG_GameState get_game_status(void);
+};
+
+class AWorldSettings {
+public:
+	float get_world_to_meters(void);
+};
+
+class ULevel {
+public:
+	class AWorldSettings* get_world_settings(void);
 };
 
 class UWorld {
 public:
 	class UGameInstance* get_game_instance(void);
 	class AGameState* get_game_state(void);
+	class ULevel* get_persistent_level(void);
 };
 
 class APlayerState {
@@ -78,8 +100,8 @@ public:
 class USkeletalMeshComponent {
 public:
 	std::optional<TArray<FTransform>> get_bone_array(void);
-	std::shared_ptr<FTransform> get_bones(void);
-	Vector3 get_bone_with_rotation(FTransform bone);
+	//std::shared_ptr<FTransform[]> get_bones(size_t* size);
+	Vector3 get_bone_with_rotation(int Index);
 	FTransform get_component_to_world(void);
 	USkinnedAsset* get_skinned_asset(void);
 };
@@ -126,17 +148,6 @@ void cache_offsets(void);
 uint64_t get_offset(std::string ClassName, std::string PropertyName);
 UWorld* get_world(void);
 
-
-namespace overlay {
-	void draw_tracers(void);
-	void draw_2d_bounding_esp(USceneComponent* RootComponent);
-	void draw_2d_corner(USkeletalMeshComponent* Mesh, FTransform* bones);
-	void draw_2d(USkeletalMeshComponent* Mesh, FTransform* bones);
-	void draw3d_esp(USceneComponent* RootComponent);
-	void draw_player_name(USkeletalMeshComponent* Mesh, FTransform* bones, std::string player_name);
-
-	void draw(void);
-}
 
 namespace exploits {
 	void infinite_stamina(void);

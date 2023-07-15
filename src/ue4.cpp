@@ -17,7 +17,7 @@ Vector2Float world_to_screen(Vector3 world_location)
 	Vector3 vTransformed = Vector3(vDelta.Dot(vAxisY), vDelta.Dot(vAxisZ), vDelta.Dot(vAxisX));
 
 	if (vTransformed.z < 1.0) {
-		vTransformed.z = 1;
+		return { 0 };
 	}
 
 	screen_location.x = (float)(data::ScreenCenterX + vTransformed.x * (data::ScreenCenterX / tan(cache::view_info.FOV * DEG_TO_RAD2)) / vTransformed.z);
