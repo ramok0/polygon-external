@@ -22,7 +22,7 @@ void overlay::draw(void) {
 	}
 
 	if (data->aim && data->fov) {
-		ImGui::GetBackgroundDrawList()->AddCircle({ data::ScreenCenterX, data::ScreenCenterY }, data->fov_value, get_color_from_float_array(data->fov_circle_color));
+		ImGui::GetBackgroundDrawList()->AddCircle({ data::ScreenCenterX, data::ScreenCenterY }, (float)data->fov_value, get_color_from_float_array(data->fov_circle_color));
 		
 		if (cache::closest_entity && data->aim_tracer) {
 			Vector2Float head_screen_loc = world_to_screen((*cache::closest_entity).get_bone_with_rotation(data->aim_bone));
