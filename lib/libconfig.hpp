@@ -168,6 +168,8 @@ namespace libconfig
 
 			BYTE* buffer = new BYTE[fileLength];
 
+			memset(buffer, 0, fileLength);
+
 			if (!libconfig::multiplatform::read_file(file_path, buffer, fileLength)) {
 				logger::log("failed to read file");
 				return false;
@@ -192,9 +194,12 @@ namespace libconfig
 
 			unsigned long dataSize = header->buf_size;
 
-			T* data = (T*)(cipherBuffer + header->data_offset);
+			T result;
 
-			this->m_data = *data;
+			ZeroMemory(&result, sizeof(T));
+			std::memcpy(&result, (T*)(cipherBuffer + header->data_offset), header->buf_size);
+
+			this->m_data = result;
 
 			return true;
 		}
