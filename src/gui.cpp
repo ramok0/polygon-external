@@ -57,7 +57,7 @@ void gui::draw_menu(void)
 		ImGui::Checkbox("Enable", &data->aim);
 		ImGui::Checkbox("Smoothing", &data->smoothing);
 
-		if (data->aim) {
+		if (data->aim && cache::bones.size() != 0) {
 			if (ImGui::BeginCombo("Aim Bone", cache::bones[data->aim_bone].c_str()))
 			{
 				for (int i = 0; i < cache::bones.size(); i++)
@@ -90,7 +90,7 @@ void gui::draw_menu(void)
 		}
 
 		if (data->vis_check) {
-			ImGui::ColorEdit4("##esp_visible_color", data->esp_visible_color, ImGuiColorEditFlags_NoInputs);
+			ImGui::ColorEdit4("##esp_vis_color", data->esp_visible_color, ImGuiColorEditFlags_NoInputs);
 			ImGui::SameLine();
 			ImGui::Text("ESP Visible Color");
 		}
@@ -106,6 +106,7 @@ void gui::draw_menu(void)
 		ImGui::Checkbox("Enable Skeleton ESP", &data->skeleton_esp);
 		ImGui::Checkbox("Enable ESP Filled", &data->esp_filled);
 		ImGui::Checkbox("Enable Names ESP", &data->esp_player_name);
+		ImGui::Checkbox("Wireframe", &data->wireframe);
 		if (data->esp) {
 			ImGui::ColorEdit4("##color", data->esp_color, ImGuiColorEditFlags_NoInputs);
 			ImGui::SameLine();

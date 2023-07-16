@@ -55,7 +55,8 @@ namespace config {
 		float fov_circle_color[4];
 		bool aim_tracer;
 		float esp_visible_color[4];
-		int aim_bone = Bones::Head;
+		int aim_bone;
+		bool wireframe;
 	};
 
 	inline libconfig::ConfigurationLoader<config_t>* config = new libconfig::ConfigurationLoader<config_t>("polygon");

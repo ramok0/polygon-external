@@ -47,6 +47,37 @@ USkinnedAsset* USkeletalMeshComponent::get_skinned_asset(void)
 	return SkeletalMesh;
 }
 
+bool USkeletalMeshComponent::set_force_wireframe(bool new_val)
+{
+	if (!this) return false;
+
+	//char pad_7C6_0 : 3; // 0x7c6(0x01)
+	//char bOverrideMinLod : 1; // 0x7c6(0x01)
+	//char bUseBoundsFromLeaderPoseComponent : 1; // 0x7c6(0x01)
+	//char bForceWireframe : 1; // 0x7c6(0x01)
+	//char bDisableMorphTarget : 1; // 0x7c6(0x01)
+	//char bHideSkin : 1; // 0x7c6(0x01)
+
+	ONCE_GET_OFFSET("/Script/Engine.SkinnedMeshComponent", "bOverrideMinLod", bOverrideMinLodOffset);
+	if (!bOverrideMinLodOffset) return false;
+
+	uint8_t data = driver::unsafe_read<uint8_t>((uintptr_t)this + bOverrideMinLodOffset);
+
+	bool current_wireframe = (data >> 5) & 0x01;
+
+	if (current_wireframe == new_val) return true;
+
+	if (new_val)
+	{
+		data |= (1 << 5);
+	}
+	else {
+		data &= ~(1 << 5);
+	}
+
+	return driver::write<uint8_t>((uintptr_t)this + bOverrideMinLodOffset, data);
+}
+
 bool USkeletalMeshComponent::was_recently_rendered(void)
 {
 	if (!this) return false;

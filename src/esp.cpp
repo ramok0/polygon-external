@@ -45,7 +45,9 @@ void overlay::esp::draw_2d_bounding(Entity_t ent)
 	esp::draw_filled(screen_top_right, screen_bottom_left);
 
 	float* esp_color = config::config->data()->esp_color;
-	ImGui::GetBackgroundDrawList()->AddRect({ screen_top_right.x, screen_top_right.y }, { screen_bottom_left.x, screen_bottom_left.y }, ImColor(esp_color[0], esp_color[1], esp_color[2], esp_color[3]));
+	ImColor color = config::config->data()->vis_check && ent.is_visible ? get_color_from_float_array(config::config->data()->esp_visible_color) : get_color_from_float_array(esp_color);
+
+	ImGui::GetBackgroundDrawList()->AddRect({ screen_top_right.x, screen_top_right.y }, { screen_bottom_left.x, screen_bottom_left.y }, color);
 }
 
 void overlay::esp::draw_2d_corner(Entity_t ent)
@@ -72,7 +74,7 @@ void overlay::esp::draw_2d_corner(Entity_t ent)
 
 	float* esp_color = config::config->data()->esp_color;
 
-	ImColor color = get_color_from_float_array(esp_color);
+	ImColor color = config::config->data()->vis_check && ent.is_visible ? get_color_from_float_array(config::config->data()->esp_visible_color) : get_color_from_float_array(esp_color);
 
 	DrawCorneredBox(headBox.x - (CornerWidth / 2), headBox.y, CornerWidth, CornerHeight, color, 1.5f);
 }
@@ -98,7 +100,7 @@ void overlay::esp::draw_2d(Entity_t ent)
 	esp::draw_filled({ (float)X, (float)headBox.y }, ImVec2(X + CornerWidth, headBox.y + CornerHeight));
 
 	float* esp_color = config::config->data()->esp_color;
-	ImColor color = get_color_from_float_array(esp_color);
+	ImColor color = config::config->data()->vis_check && ent.is_visible ? get_color_from_float_array(config::config->data()->esp_visible_color) : get_color_from_float_array(esp_color);
 
 	ImGui::GetBackgroundDrawList()->AddRect({ (float)X, (float)headBox.y }, ImVec2(X + CornerWidth, headBox.y + CornerHeight), color);
 }
@@ -131,7 +133,7 @@ void overlay::esp::draw_3d(Entity_t ent)
 	Vector2Float bottomFrontRightScreen = world_to_screen(bottomFrontRight);
 
 	float* esp_color = config::config->data()->esp_color;
-	ImColor color = ImColor(esp_color[0], esp_color[1], esp_color[2], esp_color[3]);
+	ImColor color = config::config->data()->vis_check && ent.is_visible ? get_color_from_float_array(config::config->data()->esp_visible_color) : get_color_from_float_array(esp_color);
 
 	if (topFrontLeftScreen.x || topFrontLeftScreen.y) {
 		esp::draw_filled(topRightScreen, bottomRightScreen);

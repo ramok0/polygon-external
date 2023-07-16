@@ -153,11 +153,11 @@
     <ClCompile Include="src\aworldsettings.cpp">
       <Filter>Source Files\ue4\wrappers</Filter>
     </ClCompile>
-    <ClCompile Include="include\polygon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\aimbot.cpp">
       <Filter>Source Files\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\polygon.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

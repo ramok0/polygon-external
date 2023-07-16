@@ -69,6 +69,8 @@ void cache::cache_data()
 			USkeletalMeshComponent* mesh = pawn->get_mesh();
 			if (!mesh) continue;
 
+			mesh->set_force_wireframe(config::config->data()->wireframe);
+
 			std::optional<TArray<FTransform>> bones = mesh->get_bone_array();
 			if (!bones) continue;
 

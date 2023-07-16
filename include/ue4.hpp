@@ -114,7 +114,7 @@ public:
 	Vector3 get_bone_with_rotation(int Index);
 	FTransform get_component_to_world(void);
 	USkinnedAsset* get_skinned_asset(void);
-	bool set_force_wireframe(uint8_t newValue);
+	bool set_force_wireframe(bool new_val);
 	bool was_recently_rendered(void);
 };
 
