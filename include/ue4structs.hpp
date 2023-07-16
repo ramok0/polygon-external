@@ -14,6 +14,10 @@ struct TArray {
 	__int32 Count;
 	__int32 Max;
 
+	operator bool() {
+		return Data && Count != 0;
+	}
+
 	T operator[](int index) {
 		T buffer;
 
@@ -189,11 +193,14 @@ struct FRotator {
 		
 
 		//double LerpedPitch = Pitch + (other.Pitch - Pitch) * Alpha;
-		//double LerpedYaw = Yaw + (other.Yaw - Yaw) * Alpha;
+		double LerpedYaw = Yaw + (other.Yaw - Yaw) * t;
 		//double LerpedRoll = Roll + (other.Roll - Roll) * Alpha;
 
+		FRotator result;
+		result.Pitch = other.Pitch;
+		result.Yaw = LerpedYaw;
 
-		return (*this + (other - *this) * t).clamp();
+		return result.clamp();
 	}
 };
 
@@ -353,4 +360,20 @@ struct FBoxSphereBounds {
 	struct Vector3 Origin; // 0x00(0x18)
 	struct Vector3 BoxExtent; // 0x18(0x18)
 	double SphereRadius; // 0x30(0x08)
+};
+
+struct FTextData {
+	char pad[0x40];
+	FString string;
+};
+
+struct FText {
+	void* VTable;
+	FTextData* Data;
+
+	operator bool() {
+		return Data != nullptr;
+	}
+
+	std::string get_string(void);
 };
