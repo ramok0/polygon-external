@@ -14,7 +14,7 @@ void overlay::draw(void) {
 		if (data->skeleton_esp)
 			overlay::esp::draw_skeleton(entity);
 
-		if(data->esp_player_health)
+		if(data->esp_health_box || data->esp_health_text)
 			overlay::esp::draw_health(&entity);
 
 		if(data->esp_player_weapon)

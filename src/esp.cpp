@@ -1,6 +1,6 @@
 #include <overlay.hpp>
 #include <skeleton.h>
-
+#include <imgui/imgui_internal.h>
 #include <map>
 
 void DrawCorneredBox(float X, float Y, float W, float H, ImColor lineColor, float thickness) {
@@ -190,7 +190,7 @@ void overlay::esp::draw_weapon_name(Entity_t* ent)
 
 void overlay::esp::draw_health(Entity_t* ent)
 {
-	if (!config::config->data()->esp_health_text || !config::config->data()->esp_health_box) return;
+	if (!config::config->data()->esp_health_text && !config::config->data()->esp_health_box) return;
 	float Health = (float)ent->HealthComponentData.Health;
 
 	float red = (100.f - Health) * 255.f / 100.f;
@@ -249,7 +249,7 @@ void overlay::esp::draw_skeleton(Entity_t ent)
 
 	ImColor SkeletonColor = get_color_from_float_array(skeleton_color);
 
-	for (BoneConnection connection : bone_connections) {
+	for (BoneConnection connection : config::config->data()->esp_skeleton_full ? bone_connections : light_bone_connections) {
 		Vector2Float firstBoneScreen;
 		Vector2Float secondBoneScreen;
 
@@ -268,7 +268,29 @@ void overlay::esp::draw_skeleton(Entity_t ent)
 			continue;
 		}
 
-		draw_list->AddLine(ImVec2(firstBoneScreen.x, firstBoneScreen.y), ImVec2(secondBoneScreen.x, secondBoneScreen.y), SkeletonColor, skeleton_thickness);
+		if (config::config->data()->esp_skeleton_bezier)
+		{
+			// Calcul des points de contrôle pour la courbe de Bézier
+			ImVec2 p0 = ImVec2(firstBoneScreen.x, firstBoneScreen.y);
+			ImVec2 p3 = ImVec2(secondBoneScreen.x, secondBoneScreen.y);
+			float control_distance = std::sqrtf(std::powf(p3.x - p0.x, 2.f) + std::powf(p3.y - p0.y, 2.f)) * 0.33f;
+			ImVec2 p1 = ImVec2(p0.x + control_distance, p0.y);
+			ImVec2 p2 = ImVec2(p3.x - control_distance, p3.y);
+
+			// Dessin de la courbe de Bézier
+			int num_segments = config::config->data()->num_of_bezier_segments;
+			const float t_step = 1.0f / num_segments;
+			for (int i = 0; i < num_segments; ++i) {
+				float t0 = i * t_step;
+				float t1 = (i + 1) * t_step;
+				ImVec2 p_start = ImBezierCubicCalc(p0, p1, p2, p3, t0);
+				ImVec2 p_end = ImBezierCubicCalc(p0, p1, p2, p3, t1);
+				draw_list->AddLine(p_start, p_end, SkeletonColor, skeleton_thickness);
+			}
+		}
+		else {
+			draw_list->AddLine(ImVec2(firstBoneScreen.x, firstBoneScreen.y), ImVec2(secondBoneScreen.x, secondBoneScreen.y), SkeletonColor, skeleton_thickness);
+		}
 	}
 }
 

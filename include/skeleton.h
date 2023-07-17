@@ -27,3 +27,16 @@ static std::array<BoneConnection, 18> bone_connections = {
 	CREATE_CONNECTION(Bones::calf_twist_01_r, Bones::foot_r), //Heel => toe
 	CREATE_CONNECTION(Bones::calf_twist_01_l, Bones::foot_l), //Heel => toe
 };
+
+static std::array<BoneConnection, 18> light_bone_connections = {
+	CREATE_CONNECTION(Bones::Head, Bones::neck_01),
+	CREATE_CONNECTION(Bones::neck_01, lowerarm_r),
+	CREATE_CONNECTION(Bones::neck_01, lowerarm_l),
+	CREATE_CONNECTION(Bones::lowerarm_l, hand_l),
+	CREATE_CONNECTION(Bones::lowerarm_r, hand_r),
+	CREATE_CONNECTION(Bones::neck_01, Bones::pelvis),
+	CREATE_CONNECTION(Bones::pelvis, Bones::foot_r),
+	CREATE_CONNECTION(Bones::pelvis, Bones::foot_l),
+	//CREATE_CONNECTION(Bones::calf_r, Bones::foot_r),
+	//CREATE_CONNECTION(Bones::calf_l, Bones::foot_l)
+};

@@ -128,6 +128,12 @@ void gui::draw_menu(void)
 			ImGui::SameLine();
 			ImGui::Text("Skeleton Color");
 
+			ImGui::Checkbox("Full Skeleton", &data->esp_skeleton_full);
+			ImGui::Checkbox("Bezier Skeleton", &data->esp_skeleton_bezier);
+			if (data->esp_skeleton_bezier)
+			{
+				ImGui::SliderInt("Num Of Bezier Segments", &data->num_of_bezier_segments, 2, 32);
+			}
 			ImGui::SliderFloat("Skeleton Thickness", &data->skeleton_thickness, 0.2f, 2.5f);
 		}
 		

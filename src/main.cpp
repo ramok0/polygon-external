@@ -30,6 +30,15 @@ int main(void) {
 	cache_offsets();
 	std::cout << "Successfully dumped " << std::dec << offset_cache.size() << " classes" << std::endl;
 
+	std::optional<FChunkedFixedUObjectArray> array = FChunkedFixedUObjectArray::get_array();
+	if (!array) return 1;
+	for (int i = 0; i < (*array).NumElements; i++) {
+		UObjectBase* obj = (*array)[i];
+		if (!obj) continue;
+
+		std::cout << obj->getFullName() << std::endl;
+	}
+
 	std::thread(cache::cache_data).detach();
 
 	GLFWwindow* window;

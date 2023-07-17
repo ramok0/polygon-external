@@ -58,9 +58,11 @@ namespace config {
 		int aim_bone;
 		bool wireframe;
 		bool esp_player_weapon;
-		bool esp_player_health;
 		bool esp_health_box;
 		bool esp_health_text;
+		bool esp_skeleton_bezier;
+		bool esp_skeleton_full;
+		int num_of_bezier_segments;
 	};
 
 	inline libconfig::ConfigurationLoader<config_t>* config = new libconfig::ConfigurationLoader<config_t>("polygon");
