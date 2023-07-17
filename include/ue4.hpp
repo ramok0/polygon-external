@@ -24,6 +24,7 @@
 		
 inline std::unordered_map<std::string, std::unordered_map<std::string, int32_t>> offset_cache;
 
+
 constexpr float BOX_REDUCTION_FACTOR = 0.380f;
 
 enum class EPG_GameState : uint8_t {
@@ -227,6 +228,29 @@ void cache_offsets(void);
 uint64_t get_offset(std::string ClassName, std::string PropertyName);
 UWorld* get_world(void);
 
+struct weapon_t {
+	float TimeBetweenShots;
+	bool cached_firerate;
+	float CurrentSpread;
+	float SpreadShot;
+	bool cached_spread;
+	float GunUpRecoil;
+	float GunBackwardRecoil;
+	float GunRecoilAlphaPerShot;
+	float GunRecoilLift;
+	bool cached_recoil;
+	float AimDownTimeMultiplier;
+	bool cached_aim_down_time_multiplier;
+	float Mobility;
+	bool cached_mobility;
+	void* ReloadCharacterAnimation;
+	void* ReloadFullCharacterAnimation;
+	void* ReloadGunAnimation;
+	void* ReloadFullGunAnimation;
+	bool cached_reload_anims;
+};
+
+inline static std::unordered_map<void*, weapon_t> original_weapon_data;
 
 namespace exploits {
 	void infinite_stamina(void);
@@ -236,7 +260,6 @@ namespace exploits {
 	void instantaim();
 	void fast_move();
 	float get_original_time_between_shots(void);
-	float get_original_mobility(void);
 	void instant_reload(void);
 }
 
