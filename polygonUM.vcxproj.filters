@@ -138,7 +138,7 @@
     <ClCompile Include="src\esp.cpp">
       <Filter>Source Files\modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\expoits.cpp">
+    <ClCompile Include="src\exploits.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\uinventorycomponent.cpp">

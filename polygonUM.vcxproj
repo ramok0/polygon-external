@@ -161,7 +161,7 @@
     <ClCompile Include="src\config.cpp" />
     <ClCompile Include="src\driver.cpp" />
     <ClCompile Include="src\esp.cpp" />
-    <ClCompile Include="src\expoits.cpp" />
+    <ClCompile Include="src\exploits.cpp" />
     <ClCompile Include="src\field.cpp" />
     <ClCompile Include="src\gui.cpp" />
     <ClCompile Include="src\main.cpp" />
