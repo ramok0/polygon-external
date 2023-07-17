@@ -156,20 +156,58 @@ void overlay::esp::draw_3d(Entity_t ent)
 
 }
 
-void overlay::esp::draw_player_name(Entity_t ent)
+void overlay::esp::draw_player_name(Entity_t* ent)
 {
 	if (!config::config->data()->esp || !config::config->data()->esp_player_name) return;
 	float* player_name_color = config::config->data()->esp_player_name_color;
 	/*SAFE_W2S(ent.Mesh, root_screen, Bones::Root);*/
 
-	Vector3 root_world_loc = ent.get_bone_with_rotation(Bones::Root);
+	Vector3 root_world_loc = ent->get_bone_with_rotation(Bones::Root);
 	if (!root_world_loc) return;
 
 	Vector2Float root_screen = world_to_screen(root_world_loc);
 	if (!root_screen) return;
 
-	ImVec2 text_size = ImGui::CalcTextSize(ent.player_name.c_str());
-	ImGui::GetBackgroundDrawList()->AddText(ImVec2(root_screen.x - (text_size.x / 2), root_screen.y + 2), get_color_from_float_array(player_name_color), ent.player_name.c_str());
+	ImVec2 text_size = ImGui::CalcTextSize(ent->player_name.c_str());
+	ImGui::GetBackgroundDrawList()->AddText(ImVec2(root_screen.x - (text_size.x / 2), root_screen.y + ent->current_text_offset), get_color_from_float_array(player_name_color), ent->player_name.c_str());
+	ent->current_text_offset = ent->current_text_offset + 14;
+}
+
+void overlay::esp::draw_weapon_name(Entity_t* ent)
+{
+	float* player_name_color = config::config->data()->esp_player_name_color;
+
+	Vector3 root_world_loc = ent->get_bone_with_rotation(Bones::Root);
+	if (!root_world_loc) return;
+
+	Vector2Float root_screen = world_to_screen(root_world_loc);
+	if (!root_screen) return;
+
+	ImVec2 text_size = ImGui::CalcTextSize(ent->weapon_name.c_str());
+	ImGui::GetBackgroundDrawList()->AddText(ImVec2(root_screen.x - (text_size.x / 2), root_screen.y + ent->current_text_offset), get_color_from_float_array(player_name_color), ent->weapon_name.c_str());
+	ent->current_text_offset = ent->current_text_offset + 13;
+}
+
+void overlay::esp::draw_health(Entity_t* ent)
+{
+	float Health = (float)ent->HealthComponentData.Health;
+
+	float red = (100.f - Health) * 255.f / 100.f;
+	float green = Health * 255.f / 100.f;
+	
+	ImColor color = ImColor(red, green, 0.f, 1.0f);
+
+	Vector3 root_world_loc = ent->get_bone_with_rotation(Bones::Root);
+	if (!root_world_loc) return;
+
+	Vector2Float root_screen = world_to_screen(root_world_loc);
+	if (!root_screen) return;
+
+	std::string data = std::to_string((int)ent->HealthComponentData.Health);
+
+	ImVec2 text_size = ImGui::CalcTextSize(data.c_str());
+	ImGui::GetBackgroundDrawList()->AddText(ImVec2(root_screen.x - (text_size.x / 2), root_screen.y + ent->current_text_offset), color, data.c_str());
+	ent->current_text_offset = ent->current_text_offset + 14;
 }
 
 void overlay::esp::draw_skeleton(Entity_t ent)
