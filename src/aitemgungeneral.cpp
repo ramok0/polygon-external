@@ -15,3 +15,16 @@ float AItem_Gun_General::get_mobility(void)
 
 	return driver::unsafe_read<float>((uintptr_t)this + MobilityOffset);
 }
+
+FText AItem_Gun_General::get_text(void)
+{
+	if (!this) return { 0 };
+
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_General", "ItemName", ItemNameOffset);
+	if (!ItemNameOffset) return { 0 };
+
+	FText text = driver::unsafe_read<FText>((uintptr_t)this + ItemNameOffset);
+	if (!text) return { 0 };
+
+	return text;
+}
