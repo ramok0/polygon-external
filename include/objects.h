@@ -84,5 +84,23 @@ public:
 		return Array;
 	}
 
+	static UObjectBase* find_object(std::string objectName) {
+		std::optional<FChunkedFixedUObjectArray> array = get_array();
+		if (!array) return nullptr;
+
+		for (int i = 0; i < (*array).NumElements; i++)
+		{
+			UObjectBase* obj = (*array)[i];
+			if (!obj) continue;
+
+			if (obj->getFullName() == objectName)
+			{
+				return obj;
+			}
+		}
+
+		return nullptr;
+	}
+
 	struct UObjectBase* operator[](uint32_t Index);
 };
