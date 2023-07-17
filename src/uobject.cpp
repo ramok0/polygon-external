@@ -37,7 +37,7 @@ std::string UObjectBase::getRelativeName()
 std::string UObjectBase::getFullName()
 {
 	std::string temp;
-	for (auto outer = getOuter(); outer; outer = getOuter())
+	for (auto outer = getOuter(); outer; outer = outer->getOuter())
 	{
 		temp = outer->getName() + "." + temp;
 	}
