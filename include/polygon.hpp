@@ -57,6 +57,8 @@ namespace config {
 		float esp_visible_color[4];
 		int aim_bone;
 		bool wireframe;
+		bool esp_player_weapon;
+		bool esp_player_health;
 	};
 
 	inline libconfig::ConfigurationLoader<config_t>* config = new libconfig::ConfigurationLoader<config_t>("polygon");
