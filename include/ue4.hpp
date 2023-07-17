@@ -46,6 +46,7 @@ class AItem_Gun_General {
 public:
 	float get_time_between_shots(void);
 	float get_mobility(void);
+	FText get_text(void);
 };
 
 class UInventoryComponent_Game {
