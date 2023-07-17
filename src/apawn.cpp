@@ -31,5 +31,5 @@ bool APawn::move_at(FRotator look_at_coords)
 	rotation_stru.Pitch = (float)look_at_coords.Pitch;
 	rotation_stru.Yaw = (float)look_at_coords.Yaw;
 
-	driver::write<rot_t>((uintptr_t)this + ControllerPitchRotationOffset, rotation_stru);
+	return driver::write<rot_t>((uintptr_t)this + ControllerPitchRotationOffset, rotation_stru);
 }
