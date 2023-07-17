@@ -7,18 +7,21 @@ void overlay::draw(void) {
 		if (entity.HealthComponentData.bIsAlive == false || entity.HealthComponentData.Health == 0) continue;
 		if (data->team_check && cache::LocalTeam == entity.Team) continue;
 
-	/*	Vector3 loc = entity.Mesh->get_bone_with_rotation(Bones::pelvis);
-		auto screen = world_to_screen(loc);
-
-		ImGui::GetBackgroundDrawList()->AddText({ screen.x, screen.y }, ImColor(0, 255, 0), entity.is_visible ? "1" : "0");*/
+		entity.current_text_offset = 2;
 
 		overlay::esp::get_method()(entity);
 
 		if (data->skeleton_esp)
 			overlay::esp::draw_skeleton(entity);
-		
+
+		if(data->esp_player_health)
+			overlay::esp::draw_health(&entity);
+
+		if(data->esp_player_weapon)
+			overlay::esp::draw_weapon_name(&entity);
+
 		if (data->esp_player_name)
-			overlay::esp::draw_player_name(entity);
+			overlay::esp::draw_player_name(&entity);
 	}
 
 	if (data->aim && data->fov) {
