@@ -136,6 +136,7 @@ void cache::cache_data()
 		exploits::no_recoil();
 		exploits::no_spread();
 		exploits::fast_move();
+		exploits::instant_reload();
 
 	//	Sleep(1000 / 300);
 	}

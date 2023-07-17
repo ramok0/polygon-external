@@ -237,6 +237,7 @@ namespace exploits {
 	void fast_move();
 	float get_original_time_between_shots(void);
 	float get_original_mobility(void);
+	void instant_reload(void);
 }
 
 namespace modules {

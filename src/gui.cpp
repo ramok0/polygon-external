@@ -163,6 +163,7 @@ void gui::draw_menu(void)
 		ImGui::Checkbox("Rapid fire", &data->rapid_fire);
 		ImGui::Checkbox("Fast move", &data->fast_move);
 		ImGui::Checkbox("Instant Aim", &data->instant_aim);
+		ImGui::Checkbox("Instant Reload", &data->instant_reload);
 
 		if (data->rapid_fire) {
 			ImGui::SliderFloat("Time Between Shots", &data->time_between_shots, 0, 0.35f);

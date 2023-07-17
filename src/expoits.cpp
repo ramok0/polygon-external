@@ -15,6 +15,7 @@ void exploits::infinite_stamina(void)
 
 inline std::unordered_map<void*, float> original_time_between_shots;
 inline std::unordered_map<void*, float> original_mobility;
+inline std::unordered_map<void*, std::unordered_map<uint64_t, void*>> original_reload_animations;
 
 void exploits::rapid_fire()
 {
@@ -77,6 +78,44 @@ void exploits::fast_move()
 	}
 
 	driver::write<float>((uintptr_t)cache::LocalCurrentWeapon + MobilityOffset, original_mobility[cache::LocalCurrentWeapon] * 2.f);
+}
+
+void exploits::instant_reload(void)
+{
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "ReloadCharacterAnimation", ReloadCharacterAnimationOffset);
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "ReloadFullCharacterAnimation", ReloadFullCharacterAnimationOffset);
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "ReloadGunAnimation", ReloadGunAnimationOffset);
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "ReloadFullGunAnimation", ReloadFullGunAnimationOffset);
+
+	if (!ReloadCharacterAnimationOffset || !ReloadFullCharacterAnimationOffset || !ReloadGunAnimationOffset || !ReloadFullGunAnimationOffset) return;
+
+	if (!config::config->data()->instant_reload) {
+		if (original_reload_animations.contains(cache::LocalCurrentWeapon)) {
+			driver::write<void*>((uintptr_t)cache::LocalCurrentWeapon + ReloadCharacterAnimationOffset, original_reload_animations[cache::LocalCurrentWeapon][ReloadCharacterAnimationOffset]);
+			driver::write<void*>((uintptr_t)cache::LocalCurrentWeapon + ReloadFullCharacterAnimationOffset, original_reload_animations[cache::LocalCurrentWeapon][ReloadFullCharacterAnimationOffset]);
+			driver::write<void*>((uintptr_t)cache::LocalCurrentWeapon + ReloadGunAnimationOffset, original_reload_animations[cache::LocalCurrentWeapon][ReloadGunAnimationOffset]);
+			driver::write<void*>((uintptr_t)cache::LocalCurrentWeapon + ReloadFullGunAnimationOffset, original_reload_animations[cache::LocalCurrentWeapon][ReloadFullGunAnimationOffset]);
+			original_reload_animations.erase(cache::LocalCurrentWeapon);
+		}
+
+		return;
+	}
+
+	if (!original_reload_animations.contains(cache::LocalCurrentWeapon))
+	{
+		std::unordered_map<uint64_t, void*> map;
+		map.insert(std::make_pair(ReloadCharacterAnimationOffset, driver::unsafe_read<void*>((uintptr_t)cache::LocalCurrentWeapon + ReloadCharacterAnimationOffset)));
+		map.insert(std::make_pair(ReloadFullCharacterAnimationOffset, driver::unsafe_read<void*>((uintptr_t)cache::LocalCurrentWeapon + ReloadFullCharacterAnimationOffset)));
+		map.insert(std::make_pair(ReloadGunAnimationOffset, driver::unsafe_read<void*>((uintptr_t)cache::LocalCurrentWeapon + ReloadGunAnimationOffset)));
+		map.insert(std::make_pair(ReloadFullGunAnimationOffset, driver::unsafe_read<void*>((uintptr_t)cache::LocalCurrentWeapon + ReloadFullGunAnimationOffset)));
+
+		original_reload_animations.insert(std::make_pair(cache::LocalCurrentWeapon, map));
+	}
+
+	driver::write<void*>((uintptr_t)cache::LocalCurrentWeapon + ReloadCharacterAnimationOffset, nullptr);
+	driver::write<void*>((uintptr_t)cache::LocalCurrentWeapon + ReloadFullCharacterAnimationOffset, nullptr);
+	driver::write<void*>((uintptr_t)cache::LocalCurrentWeapon + ReloadGunAnimationOffset, nullptr);
+	driver::write<void*>((uintptr_t)cache::LocalCurrentWeapon + ReloadFullGunAnimationOffset, nullptr);
 }
 
 float exploits::get_original_mobility(void)
