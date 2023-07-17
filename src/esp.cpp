@@ -3,7 +3,7 @@
 
 #include <map>
 
-void DrawCorneredBox(float X, float Y, float W, float H, const ImColor& lineColor, float thickness) {
+void DrawCorneredBox(float X, float Y, float W, float H, ImColor lineColor, float thickness) {
 	float lineW = W / 3;
 	float lineH = H / 3;
 
@@ -20,7 +20,7 @@ void DrawCorneredBox(float X, float Y, float W, float H, const ImColor& lineColo
 	DrawList->AddLine(ImVec2(X + W, Y + H - lineH), ImVec2(X + W, Y + H), lineColor, thickness);
 
 	// Lignes intérieures
-//	lineColor = ImGui::ColorConvertFloat4ToU32(ImVec4(1.f / 255, 1.f / 255, 1.f / 255, 1.f));
+	lineColor = ImColor(1.f / 255, 1.f / 255, 1.f / 255, 1.f);
 	DrawList->AddLine(ImVec2(X, Y), ImVec2(X, Y + lineH), lineColor, 3.f);
 	DrawList->AddLine(ImVec2(X, Y), ImVec2(X + lineW, Y), lineColor, 3.f);
 	DrawList->AddLine(ImVec2(X + W - lineW, Y), ImVec2(X + W, Y), lineColor, 3.f);
@@ -190,6 +190,7 @@ void overlay::esp::draw_weapon_name(Entity_t* ent)
 
 void overlay::esp::draw_health(Entity_t* ent)
 {
+	if (!config::config->data()->esp_health_text || !config::config->data()->esp_health_box) return;
 	float Health = (float)ent->HealthComponentData.Health;
 
 	float red = (100.f - Health) * 255.f / 100.f;
@@ -203,11 +204,36 @@ void overlay::esp::draw_health(Entity_t* ent)
 	Vector2Float root_screen = world_to_screen(root_world_loc);
 	if (!root_screen) return;
 
-	std::string data = std::to_string((int)ent->HealthComponentData.Health);
+	if (config::config->data()->esp_health_box)
+	{
+		Vector3 headPos = ent->get_bone_with_rotation(Bones::Head);
+		if (!headPos) return;
 
-	ImVec2 text_size = ImGui::CalcTextSize(data.c_str());
-	ImGui::GetBackgroundDrawList()->AddText(ImVec2(root_screen.x - (text_size.x / 2), root_screen.y + ent->current_text_offset), color, data.c_str());
-	ent->current_text_offset = ent->current_text_offset + 14;
+		Vector2Float headBox = world_to_screen({ headPos.x, headPos.y, headPos.z + 5 });
+		if (!headBox) return;
+
+		float CornerHeight = abs(headBox.y - root_screen.y); //hauteur
+		float CornerWidth = CornerHeight * 0.75f; // width = hauteur / 0.75 (pour avoir une width constante ??)
+
+		float X = (headBox.x - (CornerWidth / 2)); //coordonnée de la boite en haut (ajoute environ une demi box pour la width)
+
+		float width = CornerWidth / 1.6f;
+		float SizeOfHealthBar = headBox.y;
+		float EndOfHealthBar = headBox.y + CornerHeight;
+		float SizeOfHealthBarScaled = (CornerHeight / 100) * Health;
+		ImGui::GetBackgroundDrawList()->AddRect({ ((float)X - (CornerWidth / 10)) + 1, (float)headBox.y + 1.f }, ImVec2((X - (width - (CornerWidth / 10))) - 1.f, (EndOfHealthBar)-1.f), ImColor(0, 0, 0, 255), 0, 0, 1.2f);
+		ImGui::GetBackgroundDrawList()->AddRectFilled({ (float)X - (CornerWidth / 10), EndOfHealthBar - SizeOfHealthBarScaled }, ImVec2(X - (width - (CornerWidth / 10)), EndOfHealthBar), color);
+
+	}
+
+	if (config::config->data()->esp_health_text)
+	{
+		std::string data = std::to_string((int)ent->HealthComponentData.Health) + " HP";
+
+		ImVec2 text_size = ImGui::CalcTextSize(data.c_str());
+		ImGui::GetBackgroundDrawList()->AddText(ImVec2(root_screen.x - (text_size.x / 2), root_screen.y + ent->current_text_offset), color, data.c_str());
+		ent->current_text_offset = ent->current_text_offset + 14;
+	}
 }
 
 void overlay::esp::draw_skeleton(Entity_t ent)

@@ -108,7 +108,8 @@ void gui::draw_menu(void)
 		ImGui::Checkbox("Enable ESP Filled", &data->esp_filled);
 		ImGui::Checkbox("Enable Names ESP", &data->esp_player_name);
 		ImGui::Checkbox("Enable Weapons ESP", &data->esp_player_weapon);
-		ImGui::Checkbox("Enable Health ESP", &data->esp_player_weapon);
+		ImGui::Checkbox("Enable Health ESP Boxes", &data->esp_health_box);
+		ImGui::Checkbox("Enable Health ESP Text", &data->esp_health_text);
 		ImGui::Checkbox("Wireframe", &data->wireframe);
 		if (data->esp) {
 			ImGui::ColorEdit4("##color", data->esp_color, ImGuiColorEditFlags_NoInputs);
