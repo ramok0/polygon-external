@@ -38,8 +38,8 @@ void cache::cache_data()
 
 		APlayerState* LocalPlayerState = LocalPawn->get_player_state();
 
+		cache::LocalPlayerState = LocalPlayerState;
 		cache::LocalPawn = LocalPawn;
-
 		cache::LocalTeam = LocalPlayerState->get_team_number();
 
 		cache::LocalHealthStatsComponent = LocalPawn->get_health_component();
@@ -91,10 +91,11 @@ void cache::cache_data()
 			entity.player_name = std::format("[{}m] {}", roundf(entity.Distance / cache::world_to_meters), playerState->get_player_name());
 			entity.player_bones = BoneCluster(entity.Mesh);
 			entity.component_to_world = mesh->get_component_to_world();
-			
+			entity.current_text_offset = 2;
 			entity.is_visible = mesh->was_recently_rendered();
+			entity.weapon_name = playerState->get_inventory()->get_current_weapon()->get_text().get_string();
 
-			if (config::config->data()->aim && entity.Team != cache::LocalTeam && entity.HealthComponentData.bIsAlive && !entity.HealthComponentData.bHealthProtection && entity.HealthComponentData.Health != 0)
+			if (config::config->data()->aim && (config::config->data()->vis_check ? entity.is_visible : true) && entity.Team != cache::LocalTeam && entity.HealthComponentData.bIsAlive && !entity.HealthComponentData.bHealthProtection && entity.HealthComponentData.Health != 0)
 			{
 				Vector3 head_position = entity.get_bone_with_rotation(Bones::Head);
 				if (head_position) {

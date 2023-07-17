@@ -20,6 +20,8 @@ struct Entity_t {
 	BoneCluster player_bones;
 	FTransform component_to_world;
 	bool is_visible;
+	int current_text_offset;
+	std::string weapon_name;
 
 	Vector3 get_bone_with_rotation(int Index) {
 		if (Index > this->player_bones.size()) {
@@ -39,6 +41,7 @@ namespace cache {
 	inline APawn* LocalPawn;
 	inline FMinimalViewInfo view_info;
 	inline std::vector<Entity_t> entities;
+	inline 	APlayerState* LocalPlayerState;
 	inline uint8_t LocalTeam;
 	inline UHealthStatsComponent* LocalHealthStatsComponent;
 	inline AItem_Gun_General* LocalCurrentWeapon;

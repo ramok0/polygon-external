@@ -159,6 +159,9 @@
     <ClCompile Include="src\polygon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\text.cpp">
+      <Filter>Source Files\ue4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\polygon.hpp">
@@ -192,6 +195,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\skeleton.h">
+      <Filter>Header Files\ressources</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ressources\raw_driver.h">
       <Filter>Header Files\ressources</Filter>
     </ClInclude>
   </ItemGroup>

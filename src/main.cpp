@@ -28,7 +28,7 @@ int main(void) {
 	std::cout << "base address : " << std::hex << data::base_address << std::endl;
 
 	cache_offsets();
-	std::cout << "Successfully dumped " << std::dec << offset_cache.size() << " classes";
+	std::cout << "Successfully dumped " << std::dec << offset_cache.size() << " classes" << std::endl;
 
 	std::thread(cache::cache_data).detach();
 

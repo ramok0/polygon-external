@@ -1,5 +1,6 @@
 #include <polygon.hpp>
 #include <cache.hpp>
+#include <fstream>
 
 void text_centered(std::string text) {
 	auto windowWidth = ImGui::GetWindowSize().x;
@@ -106,6 +107,8 @@ void gui::draw_menu(void)
 		ImGui::Checkbox("Enable Skeleton ESP", &data->skeleton_esp);
 		ImGui::Checkbox("Enable ESP Filled", &data->esp_filled);
 		ImGui::Checkbox("Enable Names ESP", &data->esp_player_name);
+		ImGui::Checkbox("Enable Weapons ESP", &data->esp_player_weapon);
+		ImGui::Checkbox("Enable Health ESP", &data->esp_player_weapon);
 		ImGui::Checkbox("Wireframe", &data->wireframe);
 		if (data->esp) {
 			ImGui::ColorEdit4("##color", data->esp_color, ImGuiColorEditFlags_NoInputs);
