@@ -189,16 +189,14 @@ struct FRotator {
 
 	FRotator lerp(FRotator other, float t)
 	{
-
-		
-
-		//double LerpedPitch = Pitch + (other.Pitch - Pitch) * Alpha;
+		double LerpedPitch = Pitch + (other.Pitch - Pitch) * t;
 		double LerpedYaw = Yaw + (other.Yaw - Yaw) * t;
 		//double LerpedRoll = Roll + (other.Roll - Roll) * Alpha;
 
 		FRotator result;
-		result.Pitch = other.Pitch;
+		result.Pitch = LerpedPitch;
 		result.Yaw = LerpedYaw;
+		result.Roll = 0;
 
 		return result.clamp();
 	}
