@@ -6,7 +6,7 @@
 #define M_PI       3.14159265358979323846
 #define DEG_TO_RAD 0.01745329251994329576924
 #define DEG_TO_RAD2 0.008726646259971647884619
-#define DEG_TO_RAD3 57.2957795130823208768f
+#define PI_180 57.2957795130823208768f
 
 template <typename T>
 struct TArray {
@@ -161,7 +161,7 @@ struct FRotator {
 	}
 
 	FRotator clamp() {
-		Yaw = fmod(Yaw, 360.0);
+		Yaw = std::fmod(Yaw, 360.0);
 		if (Yaw < 0.0)
 			Yaw += 360.0;
 

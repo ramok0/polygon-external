@@ -82,8 +82,10 @@ void overlay::esp::draw_2d_corner(Entity_t ent)
 void overlay::esp::draw_2d(Entity_t ent)
 {
 	if (!config::config->data()->esp) return;
+
 	Vector3 headPos = ent.get_bone_with_rotation(Bones::Head);
 	if (!headPos) return;
+
 	Vector3 bottomPos = ent.get_bone_with_rotation(Bones::Root);
 	if (!bottomPos) return;
 
