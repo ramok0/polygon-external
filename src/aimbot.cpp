@@ -1,25 +1,17 @@
 #include <ue4.hpp>
 #include <cache.hpp>
 
-//inline static long long LastFrameTimeStamp;
-//inline static double DeltaTime;
-//inline static void* pawn;
-
-
-
 FRotator calc_angle(Vector3 src, Vector3 dst)
 {
-	Vector3 delta = dst - src;
-	float hyp = sqrtf(delta.x * delta.x + delta.y * delta.y);
+	Vector3 vVector = dst - src;
+	double pitch = atan2(vVector.z, sqrt((vVector.x * vVector.x) + (vVector.y * vVector.y) + (vVector.z * vVector.z))) * PI_180;
+	double yaw = atan2(vVector.y, vVector.x) * PI_180;
 
-	float yaw = atan2f((float)delta.y, (float)delta.x) * PI_180;
-	float pitch = -((acosf(((float)delta.z / (float)hyp)) * PI_180) - 90.f);
-
-	FRotator angles = { pitch, yaw, 0 };
-
-	return angles.clamp();
+	return FRotator(
+		pitch,
+		yaw,
+		0);
 }
-
 
 void modules::aimbot()
 {
@@ -27,8 +19,6 @@ void modules::aimbot()
 	if (!GetAsyncKeyState(VK_RBUTTON)) {
 		return;
 	}
-
-	//cache::LocalPawn->get_mesh()->get_bone_with_rotation(Bones::Head)
 
 	Vector3 head_loc = (*cache::closest_entity).get_bone_with_rotation(config::config->data()->aim_bone);
 
