@@ -22,6 +22,7 @@ namespace data {
 	inline WINDOW_TABS current_tab;
 	inline float cache_per_second;
 	inline float world_to_meters;
+	inline bool should_self_destruct;
 }
 
 namespace config {

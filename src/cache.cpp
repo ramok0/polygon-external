@@ -20,7 +20,7 @@ void cache::cache_data()
 			cache::entities.clear();
 			FAIL_CONTINUE("GameStatus");
 		}
-		
+
 
 		APlayerController* LocalPlayerController = World->get_game_instance()->get_local_player()->get_player_controller();
 
@@ -43,11 +43,12 @@ void cache::cache_data()
 		cache::LocalTeam = LocalPlayerState->get_team_number();
 
 		cache::LocalHealthStatsComponent = LocalPawn->get_health_component();
-		cache::LocalCurrentWeapon = LocalPlayerState->get_inventory()->get_current_weapon();
+		cache::LocalInventory = LocalPlayerState->get_inventory();
+		cache::LocalCurrentWeapon = cache::LocalInventory->get_current_weapon();
 
 		cache::world_to_meters = World->get_persistent_level()->get_world_settings()->get_world_to_meters();
 
-		if(cache::bones.size() == 0)
+		if (cache::bones.size() == 0)
 			cache::bones = LocalPawn->get_mesh()->get_skinned_asset()->get_bones_as_vector();
 
 		//cache players
@@ -124,11 +125,14 @@ void cache::cache_data()
 
 		auto end = std::chrono::high_resolution_clock::now();
 
-		float elapsedSeconds = std::chrono::duration<float>(end-start).count();
+		float elapsedSeconds = std::chrono::duration<float>(end - start).count();
 
 		data::cache_per_second = count / elapsedSeconds;
 
-		modules::aimbot();
+		if (data::should_self_destruct)
+		{
+			break;
+		}
 
 		exploits::infinite_stamina();
 		exploits::rapid_fire();
@@ -138,6 +142,8 @@ void cache::cache_data()
 		exploits::fast_move();
 		exploits::instant_reload();
 
-	//	Sleep(1000 / 300);
+		modules::aimbot();
+
+		//	Sleep(1000 / 300);
 	}
 }

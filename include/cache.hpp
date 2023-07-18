@@ -45,6 +45,7 @@ namespace cache {
 	inline uint8_t LocalTeam;
 	inline UHealthStatsComponent* LocalHealthStatsComponent;
 	inline AItem_Gun_General* LocalCurrentWeapon;
+	inline UInventoryComponent_Game* LocalInventory;
 	inline float world_to_meters;
 	inline std::optional<Entity_t> closest_entity;
 	inline std::vector<std::string> bones;
