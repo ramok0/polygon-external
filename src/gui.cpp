@@ -172,6 +172,12 @@ void gui::draw_menu(void)
 				data->time_between_shots = exploits::get_original_time_between_shots();
 			}
 		}
+
+		if (ImGui::Button("Self Destruct"))
+		{
+			data::should_self_destruct = true;
+		}
+
 		break;
 	}
 	

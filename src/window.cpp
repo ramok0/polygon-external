@@ -129,10 +129,7 @@ ImVec4 window::convert_color(const std::string& codeCouleurHTML)
 
 void window::tick(GLFWwindow* window)
 {
-
-
-
-	if (!IsWindow(data::gameWindow)) {
+	if (!IsWindow(data::gameWindow) || data::should_self_destruct) {
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 		return;
 	}

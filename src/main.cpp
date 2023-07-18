@@ -10,6 +10,7 @@ int main(void) {
 		return 1;
 	}
 
+
 	data::gameWindow = FindWindowA("UnrealWindow", "Polygon  ");
 	if (!IsWindow(data::gameWindow)) {
 		std::cerr << "Failed to get game window" << std::endl;
@@ -54,6 +55,12 @@ int main(void) {
 	}
 
 	window::cleanup(window);
+
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+	if (data::should_self_destruct)
+	{
+		exploits::panic();
+	}
 
 	return 0;
 }
