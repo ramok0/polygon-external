@@ -48,11 +48,21 @@ public:
 	float get_time_between_shots(void);
 	float get_mobility(void);
 	FText get_text(void);
+	bool set_air_down_time_multiplier(float value);
+	bool set_recoil(float uprecoil, float backwardrecoil, float gunrecoilalphapershot, float gunrecoillift);
+	bool set_spread(float current_spread, float spread_shot);
+	bool set_mobility(float mobility);
+	bool set_fire_rate(float rate);
+	bool set_reload_animations(void* ReloadCharacterAnimation, void* ReloadFullCharacterAnimation, void* ReloadGunAnimation, void* ReloadFullGunAnimation);
+
+	void reset_values(void);
 };
 
 class UInventoryComponent_Game {
 public:
 	AItem_Gun_General* get_current_weapon();
+	AItem_Gun_General* get_primary_weapon();
+	AItem_Gun_General* get_secondary_weapon();
 };
 
 class USceneComponent {
@@ -261,6 +271,9 @@ namespace exploits {
 	void fast_move();
 	float get_original_time_between_shots(void);
 	void instant_reload(void);
+
+	void apply_weapon_data(AItem_Gun_General* weapon, weapon_t data);
+	void panic();
 }
 
 namespace modules {
