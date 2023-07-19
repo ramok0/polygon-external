@@ -65,6 +65,8 @@ namespace config {
 		bool esp_skeleton_full;
 		int num_of_bezier_segments;
 		bool instant_reload;
+		int tracers_bone;
+		bool tracers;
 	};
 
 	inline libconfig::ConfigurationLoader<config_t>* config = new libconfig::ConfigurationLoader<config_t>("polygon");

@@ -26,8 +26,11 @@ void gui::draw_tabs(void)
 	if (center_tab_button("Aimbot", button_size))
 		data::current_tab = WINDOW_TABS::AIMBOT;
 
-	if (center_tab_button("Visuals", button_size))
-		data::current_tab = WINDOW_TABS::VISUALS;
+	if (center_tab_button("ESP", button_size))
+		data::current_tab = WINDOW_TABS::ESP;	
+	
+	if (center_tab_button("Tracers", button_size))
+		data::current_tab = WINDOW_TABS::Tracers;
 
 	if (center_tab_button("Extras", button_size))
 		data::current_tab = WINDOW_TABS::EXTRA;
@@ -99,7 +102,7 @@ void gui::draw_menu(void)
 		ImGui::Checkbox("Visible Check", &data->vis_check);
 		ImGui::Checkbox("Team Check", &data->team_check);
 		break;
-	case WINDOW_TABS::VISUALS:
+	case WINDOW_TABS::ESP:
 		text_centered("Visuals");
 		ImGui::Spacing();
 
@@ -151,6 +154,31 @@ void gui::draw_menu(void)
 
 		ImGui::Checkbox("Visible Check", &data->vis_check);
 		ImGui::Checkbox("Team Check", &data->team_check);
+
+		break;
+	case WINDOW_TABS::Tracers:
+		text_centered("Tracers");
+		ImGui::Spacing();
+
+		ImGui::Checkbox("Enable Tracers", &data->tracers);
+
+		if (data->tracers && cache::bones.size() != 0) {
+			if (ImGui::BeginCombo("Tracers Bone", cache::bones[data->tracers_bone].c_str()))
+			{
+				for (int i = 0; i < cache::bones.size(); i++)
+				{
+					bool is_selected = data->tracers_bone == i;
+					if (ImGui::Selectable(cache::bones[i].c_str(), &is_selected))
+					{
+						data->tracers_bone = i;
+					}
+
+					if (is_selected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+		}
 
 		break;
 	case WINDOW_TABS::EXTRA:

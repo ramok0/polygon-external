@@ -102,6 +102,15 @@ bool AItem_Gun_General::set_reload_animations(void* ReloadCharacterAnimation, vo
 	return driver::write<void*>((uintptr_t)this + ReloadFullGunAnimationOffset, ReloadFullGunAnimation);
 }
 
+bool AItem_Gun_General::set_equip_animation(void* Animation)
+{
+	if(!this) return false;
+
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "EquipAnimation", EquipAnimationOffset);
+
+	return driver::write((uintptr_t)this + EquipAnimationOffset, Animation);
+}
+
 void AItem_Gun_General::reset_values(void)
 {
 	if (!this) return;

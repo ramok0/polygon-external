@@ -17,7 +17,8 @@ constexpr float BUTTON_SIZE = 135.f;
 
 enum WINDOW_TABS : uint8_t {
 	AIMBOT,
-	VISUALS,
+	ESP,
+	Tracers,
 	EXTRA
 };
 

@@ -54,6 +54,7 @@ public:
 	bool set_mobility(float mobility);
 	bool set_fire_rate(float rate);
 	bool set_reload_animations(void* ReloadCharacterAnimation, void* ReloadFullCharacterAnimation, void* ReloadGunAnimation, void* ReloadFullGunAnimation);
+	bool set_equip_animation(void* Animation);
 
 	void reset_values(void);
 };
@@ -258,6 +259,8 @@ struct weapon_t {
 	void* ReloadGunAnimation;
 	void* ReloadFullGunAnimation;
 	bool cached_reload_anims;
+	void* EquipAnimation;
+	bool cached_equip_animation;
 };
 
 inline static std::unordered_map<void*, weapon_t> original_weapon_data;
