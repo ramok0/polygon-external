@@ -1,4 +1,5 @@
-#include <ue4structs.hpp>
+#include <gamestructs.h>
+
 
 std::string FText::get_string(void)
 {

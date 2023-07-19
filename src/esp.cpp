@@ -1,5 +1,13 @@
-#include <overlay.hpp>
+#include <overlay.h>
+#include <ue4.h>
+#include <gamestructs.h>
+#include <config.h>
 #include <skeleton.h>
+#include <wrappers.h>
+#include <polygon.h>
+#include <game.h>
+#include <imhelper.h>
+
 #include <imgui/imgui_internal.h>
 #include <map>
 

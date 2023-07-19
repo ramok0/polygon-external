@@ -1,8 +1,8 @@
 #pragma once
 #include <optional>
-#include <cstdint>
 #include <string>
 #include <names.h>
+
 
 struct UObjectBase {
 private:
@@ -77,30 +77,9 @@ public:
 	/** Number of chunks we currently have **/
 	int32_t NumChunks;
 
-	static std::optional<FChunkedFixedUObjectArray> get_array(void) {
-		RPM(FChunkedFixedUObjectArray, data::base_address + offsets::objects, Array);
-		if (!ArraySuccess) return std::nullopt;
+	static std::optional<FChunkedFixedUObjectArray> get_array(void);
 
-		return Array;
-	}
-
-	static UObjectBase* find_object(std::string objectName) {
-		std::optional<FChunkedFixedUObjectArray> array = get_array();
-		if (!array) return nullptr;
-
-		for (int i = 0; i < (*array).NumElements; i++)
-		{
-			UObjectBase* obj = (*array)[i];
-			if (!obj) continue;
-
-			if (obj->getFullName() == objectName)
-			{
-				return obj;
-			}
-		}
-
-		return nullptr;
-	}
+	static UObjectBase* find_object(std::string objectName);
 
 	struct UObjectBase* operator[](uint32_t Index);
 };

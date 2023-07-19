@@ -1,5 +1,8 @@
 #include <names.h>
-#include <polygon.hpp>
+#include <polygon.h>
+#include <driver.h>
+#include <game.h>
+#include <Windows.h>
 
 std::string get_name_by_index(uint32_t Index)
 {
@@ -62,4 +65,12 @@ std::string get_name_by_index(uint32_t Index)
 	}
 
 	return std::string();
+}
+
+std::optional<FNamePool> FNamePool::get_fname_pool(void)
+{
+	RPM(FNamePool, data::base_address + offsets::names, NamePool);
+	if (!NamePoolSuccess) return std::nullopt;
+
+	return NamePool;
 }

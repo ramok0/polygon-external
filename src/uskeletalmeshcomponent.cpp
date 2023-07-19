@@ -1,4 +1,6 @@
-#include <ue4.hpp>
+#include <wrappers.h>
+#include <offsets.h>
+#include <game.h>
 
 std::optional<TArray<FTransform>> USkeletalMeshComponent::get_bone_array(void)
 {

@@ -1,4 +1,5 @@
-#include <ue4.hpp>
+#include <wrappers.h>
+#include <offsets.h>
 
 Vector3 USceneComponent::relative_location(void)
 {

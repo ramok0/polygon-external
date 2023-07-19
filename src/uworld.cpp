@@ -1,4 +1,5 @@
-#include <ue4.hpp>
+#include <wrappers.h>
+#include <offsets.h>
 
 UGameInstance* UWorld::get_game_instance(void)
 {

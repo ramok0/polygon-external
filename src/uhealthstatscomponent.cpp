@@ -1,4 +1,5 @@
-#include <ue4.hpp>
+#include <wrappers.h>
+#include <offsets.h>
 
 std::optional<HealthStatsComponentData> UHealthStatsComponent::get_data()
 {
@@ -18,7 +19,7 @@ std::optional<HealthStatsComponentData> UHealthStatsComponent::get_data()
 		return std::nullopt;
 	}
 
-	BYTE* buffer = new BYTE[0x100];
+	unsigned char* buffer = new unsigned char[0x100];
 	if (!buffer) return std::nullopt;
 
 	if (!driver::read((uintptr_t)this, (uintptr_t)buffer, 0x100)) {

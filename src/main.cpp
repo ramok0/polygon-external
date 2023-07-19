@@ -1,8 +1,10 @@
-#include <polygon.hpp>
-#include <objects.h>
-#include <iostream>
-#include <ue4.hpp>
-#include <cache.hpp>
+#include <config.h>
+#include <polygon.h>
+#include <driver.h>
+#include <window.h>
+#include <cache.h>
+#include <offsets.h>
+#include <exploits.h>
 
 int main(void) {
 	if (!config::init()) {
@@ -12,12 +14,12 @@ int main(void) {
 
 
 	data::gameWindow = FindWindowA("UnrealWindow", "Polygon  ");
-	if (!IsWindow(data::gameWindow)) {
+	if (!IsWindow((HWND)data::gameWindow)) {
 		std::cerr << "Failed to get game window" << std::endl;
 		return 1;
 	}
 
-	GetWindowThreadProcessId(data::gameWindow, &data::pid);
+	GetWindowThreadProcessId((HWND)data::gameWindow, &data::pid);
 
 	if (!driver::init()) {
 		std::cerr << "failed to initialize driver !" << std::endl;

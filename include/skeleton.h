@@ -1,7 +1,6 @@
 #pragma once
-#include <utility>
+#include <game.h>
 #include <array>
-#include <game.hpp>
 
 typedef std::pair<int, int> BoneConnection;
 

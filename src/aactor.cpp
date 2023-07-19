@@ -1,4 +1,5 @@
-#include <ue4.hpp>
+#include <wrappers.h>
+#include <offsets.h>
 
 USceneComponent* AActor::get_root_component(void)
 {

@@ -1,4 +1,6 @@
 #include <objects.h>
+#include <game.h>
+#include <driver.h>
 
 FField* FField::get_next(void)
 {

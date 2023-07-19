@@ -1,11 +1,25 @@
 #pragma once
-#include <ue4.hpp>
+#include <vectortypes.h>
+#include <bonecluster.h>
+#include <ue4.h>
+#include <gamestructs.h>
 
-//printf("failed to process " obj "\n"); \
+#include <string>
+#include <vector>
+#include <optional>
 
 #define FAIL_CONTINUE(obj){\
 		continue;\
 	}
+
+class APawn;
+class USceneComponent;
+class USkeletalMeshComponent;
+class APlayerController;
+class UHealthStatsComponent;
+class AItem_Gun_General;
+class UInventoryComponent_Game;
+class APlayerState;
 
 struct Entity_t {
 
@@ -23,7 +37,8 @@ struct Entity_t {
 	int current_text_offset;
 	std::string weapon_name;
 
-	Vector3 get_bone_with_rotation(int Index) {
+	Vector3 get_bone_with_rotation(int Index)
+	{
 		if (Index > this->player_bones.size()) {
 			return { 0 };
 		}

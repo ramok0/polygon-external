@@ -1,5 +1,8 @@
-#include <ue4.hpp>
-#include <overlay.hpp>
+#include <overlay.h>
+#include <config.h>
+#include <cache.h>
+#include <polygon.h>
+#include <imhelper.h>
 
 void overlay::draw(void) {
 	config::config_t* data = config::config->data();

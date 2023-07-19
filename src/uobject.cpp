@@ -1,4 +1,6 @@
 #include <objects.h>
+#include <driver.h>
+
 
 int32_t UObjectBase::getInternalIndex()
 {

@@ -1,4 +1,5 @@
-#include <ue4.hpp>
+#include <wrappers.h>
+#include <offsets.h>
 
 float AWorldSettings::get_world_to_meters(void)
 {

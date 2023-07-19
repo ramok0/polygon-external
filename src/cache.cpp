@@ -1,8 +1,12 @@
-#include <cache.hpp>
-#include <polygon.hpp>
-#include <game.hpp>
-#include <ue4.hpp>
-#include <iostream>
+#include <cache.h>
+#include <polygon.h>
+#include <game.h>
+#include <ue4.h>
+#include <config.h>
+
+#include <chrono>
+#include <exploits.h>
+#include <modules.h>
 
 void cache::cache_data()
 {

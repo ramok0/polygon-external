@@ -1,4 +1,5 @@
-#include <ue4.hpp>
+#include <wrappers.h>
+#include <offsets.h>
 
 APlayerController* ULocalPlayer::get_player_controller(void)
 {

@@ -1,6 +1,9 @@
-#include <polygon.hpp>
-#include <ue4.hpp>
-#include <overlay.hpp>
+#include <window.h>
+#include <polygon.h>
+#include <config.h>
+#include <ue4.h>
+#include <overlay.h>
+#include <Windows.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 
@@ -13,7 +16,7 @@ bool window::create(GLFWwindow** lpWindow)
 		return false;
 	}
 
-	if (!IsWindow(data::gameWindow)) return false;
+	if (!IsWindow((HWND)data::gameWindow)) return false;
 
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 	if (!monitor) {
@@ -129,13 +132,13 @@ ImVec4 window::convert_color(const std::string& codeCouleurHTML)
 
 void window::tick(GLFWwindow* window)
 {
-	if (!IsWindow(data::gameWindow) || data::should_self_destruct) {
+	if (!IsWindow((HWND)data::gameWindow) || data::should_self_destruct) {
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 		return;
 	}
 
 	RECT rect;
-	GetWindowRect(data::gameWindow, &rect);
+	GetWindowRect((HWND)data::gameWindow, &rect);
 
 	int Width = rect.right - rect.left;
 	int Height = rect.bottom - rect.top;

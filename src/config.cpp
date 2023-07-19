@@ -1,4 +1,4 @@
-#include <polygon.hpp>
+#include <config.h>
 
 bool config::init(void) {
 	config::config_t defaultConfig = { 0 };

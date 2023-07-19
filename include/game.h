@@ -1,21 +1,21 @@
 #pragma once
-#include <cstddef>
+typedef int offset;
 
 namespace offsets {
-	inline std::ptrdiff_t world = 0x7FE3C50;
-	inline std::ptrdiff_t names = 0x7DE4500;
-	inline std::ptrdiff_t objects = 0x7E8ABB0;
-	inline std::ptrdiff_t bone_array = 0x600;
-	inline std::ptrdiff_t component_to_world = 0x240;
-	inline std::ptrdiff_t ref_skeleton = 0x2E0;
-	inline std::ptrdiff_t FinalRefBoneInfo = 0x20;
+	inline offset world = 0x7FE3C50;
+	inline offset names = 0x7DE4500;
+	inline offset objects = 0x7E8ABB0;
+	inline offset bone_array = 0x600;
+	inline offset component_to_world = 0x240;
+	inline offset ref_skeleton = 0x2E0;
+	inline offset FinalRefBoneInfo = 0x20;
 
-	inline std::ptrdiff_t ustruct_childproperties = 0x50;
+	inline offset ustruct_childproperties = 0x50;
 
-	inline std::ptrdiff_t ffield_name = 0x28;
-	inline std::ptrdiff_t ffield_next = 0x20;
+	inline offset ffield_name = 0x28;
+	inline offset ffield_next = 0x20;
 
-	inline std::ptrdiff_t fproperty_offset = 0x4C;
+	inline offset fproperty_offset = 0x4C;
 }
 
 enum Bones {

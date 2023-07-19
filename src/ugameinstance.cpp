@@ -1,4 +1,5 @@
-#include <ue4.hpp>
+#include <wrappers.h>
+#include <offsets.h>
 
 
 ULocalPlayer* UGameInstance::get_local_player(void)

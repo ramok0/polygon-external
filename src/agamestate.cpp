@@ -1,4 +1,6 @@
-#include <ue4.hpp>
+#include <wrappers.h>
+#include <offsets.h>
+#include <tarray.h>
 
 std::optional<TArray<class APlayerState*>> AGameState::get_player_array(void)
 {

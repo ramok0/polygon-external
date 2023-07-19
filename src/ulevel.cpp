@@ -1,4 +1,5 @@
-#include <ue4.hpp>
+#include <wrappers.h>
+#include <offsets.h>
 
 AWorldSettings* ULevel::get_world_settings(void)
 {

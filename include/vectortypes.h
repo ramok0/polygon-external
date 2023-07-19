@@ -1,82 +1,10 @@
 #pragma once
-#include <names.h>
-#include <cstdint>
-#include <vector>
-#include <memory>
+#include <cmath>
 #define M_PI       3.14159265358979323846
-#define DEG_TO_RAD 0.01745329251994329576924
-#define DEG_TO_RAD2 0.008726646259971647884619
-#define PI_180 57.2957795130823208768f
 
-template <typename T>
-struct TArray {
-	T* Data;
-	__int32 Count;
-	__int32 Max;
-
-	operator bool() {
-		return Data && Count != 0;
-	}
-
-	T operator[](int index) {
-		T buffer;
-
-		if (!driver::read((uintptr_t)Data + (sizeof(T) * index), (uintptr_t)&buffer, sizeof(T))) {
-			return T{ 0 };
-		}
-
-		return buffer;
-	}
-
-	T get(int Index, size_t size) {
-		T buffer;
-
-		if (!driver::read((uintptr_t)Data + (size * Index), (uintptr_t)&buffer, sizeof(T))) {
-			return T{ 0 };
-		}
-
-		return buffer;
-	}
-
-	T* read_every_elements() {
-		T* bufferData = new T[Count];
-
-		if (!driver::read((uintptr_t)Data, (uintptr_t)bufferData, (uintptr_t)(sizeof(T) * Count)))
-		{
-			delete[] bufferData;
-			return nullptr;
-		}
-
-		return bufferData;
-	}
-};
-
-struct FString : TArray<wchar_t> {
-	std::string to_string()
-	{
-		if (!Data || Count == 0) return std::string();
-		wchar_t buf[1024];
-
-		if (!driver::read((uintptr_t)Data, (uintptr_t)buf, this->Count * 2ull))
-		{
-			return std::string();
-		}
-
-		//std::wstring wStr;
-		//wStr.assign(buf, sizeof(buf));
-		//wStr.resize(this->Count);
-
-		int bufferSize = WideCharToMultiByte(CP_ACP, 0, buf, -1, NULL, 0, NULL, NULL);
-		char* narrowString = new char[bufferSize];
-		WideCharToMultiByte(CP_ACP, 0, buf, -1, narrowString, bufferSize, NULL, NULL);
-
-		std::string out = std::string(narrowString, bufferSize);
-
-		delete[] narrowString;
-
-		return out;
-	}
-};
+constexpr double DEG_TO_RAD = M_PI / 180;
+constexpr double RAD_TO_DEG = 180 / M_PI;
+constexpr double DEG_TO_RAD2 = DEG_TO_RAD / 2;
 
 struct Vector3 {
 	double x;
@@ -341,37 +269,4 @@ struct FTransform {
 	}
 };
 
-struct BoneArray {
-	TArray<FTransform> ComponentSpaceTransformsArray[2];
-};
-
-struct FMeshBoneInfo
-{
-	// Bone's name.
-	FName Name;
-
-	// INDEX_NONE if this is the root bone. 
-	int32_t ParentIndex;
-};
-
-struct FBoxSphereBounds {
-	struct Vector3 Origin; // 0x00(0x18)
-	struct Vector3 BoxExtent; // 0x18(0x18)
-	double SphereRadius; // 0x30(0x08)
-};
-
-struct FTextData {
-	char pad[0x40];
-	FString string;
-};
-
-struct FText {
-	void* VTable;
-	FTextData* Data;
-
-	operator bool() {
-		return Data != nullptr;
-	}
-
-	std::string get_string(void);
-};
+Vector2Float world_to_screen(Vector3 world_location);

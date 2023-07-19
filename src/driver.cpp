@@ -1,4 +1,6 @@
-#include <polygon.hpp>
+#include <driver.h>
+#include <polygon.h>
+#include <Windows.h>
 
 #define DRIVER_NAME L"\\\\.\\RamokDriver"
 #define IOCTL_READ_MEM CTL_CODE(FILE_DEVICE_UNKNOWN, 0x999, METHOD_OUT_DIRECT, FILE_ANY_ACCESS)

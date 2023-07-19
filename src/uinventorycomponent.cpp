@@ -1,4 +1,5 @@
-#include <ue4.hpp>
+#include <wrappers.h>
+#include <offsets.h>
 
 AItem_Gun_General* UInventoryComponent_Game::get_current_weapon()
 {

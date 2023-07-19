@@ -34,6 +34,24 @@
     <Filter Include="Source Files\ue4\wrappers">
       <UniqueIdentifier>{2bf4afd8-c9d8-4b92-b1fc-6db1824fefa2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\structrures">
+      <UniqueIdentifier>{d908fc5d-0c3a-4616-9eab-765008c58196}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cache">
+      <UniqueIdentifier>{79208742-1978-4a91-a53c-f451541cdc3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\driver">
+      <UniqueIdentifier>{0d6e3dcc-2f13-4675-8e77-70a3cd75c054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\config">
+      <UniqueIdentifier>{0dd412bb-8e64-4bd1-a517-0e5b320324c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cheating">
+      <UniqueIdentifier>{8a0f04c4-1f0a-41f5-a056-72969983f7f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\renderer">
+      <UniqueIdentifier>{c56e1bdb-a7d9-4ae9-88fc-8ae910b2c593}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -156,49 +174,91 @@
     <ClCompile Include="src\aimbot.cpp">
       <Filter>Source Files\modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\polygon.cpp">
+    <ClCompile Include="src\imhelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\text.cpp">
       <Filter>Source Files\ue4</Filter>
     </ClCompile>
+    <ClCompile Include="src\entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fstring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\offsets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vectortypes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\polygon.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\game.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ue4.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\names.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\objects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\cache.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ue4structs.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\ressources\roboto.h">
       <Filter>Header Files\ressources</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ressources\window_constants.h">
-      <Filter>Header Files\ressources</Filter>
-    </ClInclude>
-    <ClInclude Include="include\overlay.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\skeleton.h">
       <Filter>Header Files\ressources</Filter>
     </ClInclude>
-    <ClInclude Include="include\ressources\raw_driver.h">
-      <Filter>Header Files\ressources</Filter>
+    <ClInclude Include="include\polygon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bonecluster.h">
+      <Filter>Header Files\structrures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cache.h">
+      <Filter>Header Files\cache</Filter>
+    </ClInclude>
+    <ClInclude Include="include\config.h">
+      <Filter>Header Files\config</Filter>
+    </ClInclude>
+    <ClInclude Include="include\driver.h">
+      <Filter>Header Files\driver</Filter>
+    </ClInclude>
+    <ClInclude Include="include\exploits.h">
+      <Filter>Header Files\cheating</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game.h">
+      <Filter>Header Files\structrures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\modules.h">
+      <Filter>Header Files\cheating</Filter>
+    </ClInclude>
+    <ClInclude Include="include\names.h">
+      <Filter>Header Files\structrures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\objects.h">
+      <Filter>Header Files\structrures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\offsets.h">
+      <Filter>Header Files\cache</Filter>
+    </ClInclude>
+    <ClInclude Include="include\overlay.h">
+      <Filter>Header Files\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamestructs.h">
+      <Filter>Header Files\structrures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tarray.h">
+      <Filter>Header Files\structrures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ue4.h">
+      <Filter>Header Files\structrures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vectortypes.h">
+      <Filter>Header Files\structrures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\window.h">
+      <Filter>Header Files\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\wrappers.h">
+      <Filter>Header Files\structrures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imhelper.h">
+      <Filter>Header Files\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\menu_structures.h">
+      <Filter>Header Files\renderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

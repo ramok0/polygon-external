@@ -1,21 +1,9 @@
-#include <polygon.hpp>
-#include <cache.hpp>
-#include <fstream>
-
-void text_centered(std::string text) {
-	auto windowWidth = ImGui::GetWindowSize().x;
-	auto textWidth = ImGui::CalcTextSize(text.c_str()).x;
-
-	ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
-	ImGui::Text(text.c_str());
-}
-
-bool center_tab_button(const char* label, ImVec2 button_size, float alignment = 0.5f)
-{
-	ImGui::Spacing();
-	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 4.f);
-	return ImGui::Button(label, button_size);
-}
+#include <polygon.h>
+#include <cache.h>
+#include <config.h>
+#include <exploits.h>
+#include <window.h>
+#include <imhelper.h>
 
 void gui::draw_tabs(void)
 {

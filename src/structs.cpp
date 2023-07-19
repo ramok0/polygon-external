@@ -1,4 +1,6 @@
 #include <objects.h>
+#include <driver.h>
+#include <game.h>
 
 FField* UStruct::get_child_properties(void)
 {

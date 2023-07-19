@@ -1,10 +1,7 @@
 #pragma once
-#include <cstdint>
 #include <string>
 #include <unordered_map>
-
-#include <polygon.hpp>
-#include <game.hpp>
+#include <optional>
 
 struct FName {
 	int32_t ComparisonIndex;
@@ -21,13 +18,7 @@ public:
 	uint32_t CurrentByteCursor;
 	uint8_t* Blocks[8192];
 
-	static std::optional<FNamePool> get_fname_pool(void)
-	{
-		RPM(FNamePool, data::base_address + offsets::names, NamePool);
-		if (!NamePoolSuccess) return std::nullopt;
-
-		return NamePool;
-	}
+	static std::optional<FNamePool> get_fname_pool(void);
 };
 
 std::string get_name_by_index(uint32_t Index);
