@@ -8,8 +8,8 @@ FRotator calc_angle(Vector3 src, Vector3 dst)
 {
 	Vector3 vVector = dst - src;
 	double hypotenus = sqrt((vVector.x * vVector.x) + (vVector.y * vVector.y) + (vVector.z * vVector.z));
-	//	double pitch = atan2(-vVector.z, hypotenus) * PI_180;
-	double pitch = asin(vVector.z / hypotenus) * RAD_TO_DEG;
+	double pitch = atan2(vVector.z, hypotenus) * RAD_TO_DEG;
+	//double pitch = asin(vVector.z / hypotenus) * RAD_TO_DEG;
 	double yaw = atan2(vVector.y, vVector.x) * RAD_TO_DEG;
 
 	return FRotator(

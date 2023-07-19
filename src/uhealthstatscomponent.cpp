@@ -39,3 +39,11 @@ std::optional<HealthStatsComponentData> UHealthStatsComponent::get_data()
 
 	return result;
 }
+
+bool UHealthStatsComponent::set_stamina(float data)
+{
+	ONCE_GET_OFFSET("/Script/POLYGON.HealthStatsComponent", "Stamina", StaminaOffset);
+	if (!StaminaOffset) return false;
+
+	return driver::write<float>((uintptr_t)this + StaminaOffset, data);
+}

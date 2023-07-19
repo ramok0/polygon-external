@@ -173,20 +173,14 @@ void gui::draw_menu(void)
 		text_centered("Extra");
 		ImGui::Spacing();
 		ImGui::Checkbox("Debug Info", &data->debug_info);
-		ImGui::Checkbox("No Spread", &data->no_spread);
-		ImGui::Checkbox("No Recoil", &data->no_recoil);
-		ImGui::Checkbox("Infinite Stamina", &data->infinite_stamina);
-		ImGui::Checkbox("Rapid fire", &data->rapid_fire);
-		ImGui::Checkbox("Fast move", &data->fast_move);
-		ImGui::Checkbox("Instant Aim", &data->instant_aim);
-		ImGui::Checkbox("Instant Reload", &data->instant_reload);
+
+		for (const auto& exploit : m_exploits)
+		{
+			ImGui::Checkbox(exploit->get_name().c_str(), exploit->get_enabled_ptr());
+		}
 
 		if (data->rapid_fire) {
-			ImGui::SliderFloat("Time Between Shots", &data->time_between_shots, 0, 0.35f);
-			ImGui::SameLine();
-			if (ImGui::Button("Reset") && cache::LocalCurrentWeapon) {
-				data->time_between_shots = exploits::get_original_time_between_shots();
-			}
+			ImGui::SliderFloat("Time Between Shots", &data->time_between_shots, 0.002, 0.35f);
 		}
 
 		if (ImGui::Button("Self Destruct"))

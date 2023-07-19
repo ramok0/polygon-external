@@ -67,7 +67,7 @@ bool AItem_Gun_General::set_spread(float current_spread, float spread_shot)
 
 	driver::write((uintptr_t)this + CurrentSpreadOffset, current_spread);
 	driver::write((uintptr_t)this + SpreadShotOffset, spread_shot);
-	
+
 	return true;
 }
 
@@ -107,19 +107,69 @@ bool AItem_Gun_General::set_reload_animations(void* ReloadCharacterAnimation, vo
 
 bool AItem_Gun_General::set_equip_animation(void* Animation)
 {
-	if(!this) return false;
+	if (!this) return false;
 
 	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "EquipAnimation", EquipAnimationOffset);
 
 	return driver::write((uintptr_t)this + EquipAnimationOffset, Animation);
 }
 
-void AItem_Gun_General::reset_values(void)
+float AItem_Gun_General::get_air_down_time_multiplier(void)
 {
-	if (!this) return;
-	if (!original_weapon_data.contains(this)) return;
+	if (!this) return false;
 
-	weapon_t data = original_weapon_data[this];
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "AimDownTimeMultiplier", AimDownTimeMultiplierOffset);
 
-	
+	return driver::unsafe_read<float>((uintptr_t)this + AimDownTimeMultiplierOffset);
+}
+
+RecoilStruct AItem_Gun_General::get_recoil(void)
+{
+	if (!this) return { 0 };
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "GunUpRecoil", GunUpRecoilOffset);
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "GunBackwardRecoil", GunBackwardRecoilOffset);
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "GunRecoilAlphaPerShot", GunRecoilAlphaPerShotOffset);
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "GunRecoilLift", GunRecoilLiftOffset);
+
+	RecoilStruct data = { 0 };
+
+	data.GunUpRecoil = driver::unsafe_read<float>((uintptr_t)this + GunUpRecoilOffset);
+	data.GunBackwardRecoil = driver::unsafe_read<float>((uintptr_t)this + GunBackwardRecoilOffset);
+	data.GunRecoilAlphaPerShot = driver::unsafe_read<float>((uintptr_t)this + GunRecoilAlphaPerShotOffset);
+	data.GunRecoilLift = driver::unsafe_read<float>((uintptr_t)this + GunRecoilLiftOffset);
+
+	return data;
+}
+
+SpreadData AItem_Gun_General::get_spread(void)
+{
+	if (!this) return { 0 };
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "CurrentSpread", CurrentSpreadOffset);
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "SpreadShot", SpreadShotOffset);
+
+	SpreadData data = { 0 };
+
+	data.CurrentSpread = driver::unsafe_read<float>((uintptr_t)this + CurrentSpreadOffset);
+	data.SpreadShot = driver::unsafe_read<float>((uintptr_t)this + SpreadShotOffset);
+
+	return data;
+}
+
+ReloadAnimations AItem_Gun_General::get_reload_animations(void)
+{
+	if (!this) return { nullptr };
+
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "ReloadCharacterAnimation", ReloadCharacterAnimationOffset);
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "ReloadFullCharacterAnimation", ReloadFullCharacterAnimationOffset);
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "ReloadGunAnimation", ReloadGunAnimationOffset);
+	ONCE_GET_OFFSET("/Script/POLYGON.Item_Gun_General", "ReloadFullGunAnimation", ReloadFullGunAnimationOffset);
+
+	ReloadAnimations animations;
+
+	animations.ReloadCharacterAnimation = driver::unsafe_read<void*>((uintptr_t)this + ReloadCharacterAnimationOffset);
+	animations.ReloadFullCharacterAnimation = driver::unsafe_read<void*>((uintptr_t)this + ReloadFullCharacterAnimationOffset);
+	animations.ReloadGunAnimation = driver::unsafe_read<void*>((uintptr_t)this + ReloadGunAnimationOffset);
+	animations.ReloadFullGunAnimation = driver::unsafe_read<void*>((uintptr_t)this + ReloadFullGunAnimationOffset);
+
+	return animations;
 }

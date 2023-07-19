@@ -12,6 +12,7 @@ int main(void) {
 		return 1;
 	}
 
+	exploits::init();
 
 	data::gameWindow = FindWindowA("UnrealWindow", "Polygon  ");
 	if (!IsWindow((HWND)data::gameWindow)) {

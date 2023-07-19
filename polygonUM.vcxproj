@@ -194,6 +194,14 @@
     <ClInclude Include="include\config.h" />
     <ClInclude Include="include\driver.h" />
     <ClInclude Include="include\exploits.h" />
+    <ClInclude Include="include\exploit.h" />
+    <ClInclude Include="include\exploits\instantaim.h" />
+    <ClInclude Include="include\exploits\instantreload.h" />
+    <ClInclude Include="include\exploits\rapidfire.h" />
+    <ClInclude Include="include\exploits\recoil.h" />
+    <ClInclude Include="include\exploits\speedhack.h" />
+    <ClInclude Include="include\exploits\spread.h" />
+    <ClInclude Include="include\exploits\stamina.h" />
     <ClInclude Include="include\game.h" />
     <ClInclude Include="include\imhelper.h" />
     <ClInclude Include="include\modules.h" />

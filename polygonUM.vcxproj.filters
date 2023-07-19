@@ -52,6 +52,9 @@
     <Filter Include="Header Files\renderer">
       <UniqueIdentifier>{c56e1bdb-a7d9-4ae9-88fc-8ae910b2c593}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\cheating\exploits">
+      <UniqueIdentifier>{a3ca474a-c19e-4001-8269-c8221add5dac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -183,14 +186,14 @@
     <ClCompile Include="src\entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\fstring.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\offsets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\vectortypes.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fstring.cpp">
+      <Filter>Source Files\ue4</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +262,30 @@
     </ClInclude>
     <ClInclude Include="include\menu_structures.h">
       <Filter>Header Files\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\exploit.h">
+      <Filter>Header Files\cheating</Filter>
+    </ClInclude>
+    <ClInclude Include="include\exploits\rapidfire.h">
+      <Filter>Header Files\cheating\exploits</Filter>
+    </ClInclude>
+    <ClInclude Include="include\exploits\stamina.h">
+      <Filter>Header Files\cheating\exploits</Filter>
+    </ClInclude>
+    <ClInclude Include="include\exploits\recoil.h">
+      <Filter>Header Files\cheating\exploits</Filter>
+    </ClInclude>
+    <ClInclude Include="include\exploits\spread.h">
+      <Filter>Header Files\cheating\exploits</Filter>
+    </ClInclude>
+    <ClInclude Include="include\exploits\instantaim.h">
+      <Filter>Header Files\cheating\exploits</Filter>
+    </ClInclude>
+    <ClInclude Include="include\exploits\speedhack.h">
+      <Filter>Header Files\cheating\exploits</Filter>
+    </ClInclude>
+    <ClInclude Include="include\exploits\instantreload.h">
+      <Filter>Header Files\cheating\exploits</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

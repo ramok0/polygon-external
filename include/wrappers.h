@@ -10,6 +10,7 @@ typedef unsigned char uint8_t;
 class UHealthStatsComponent {
 public:
 	std::optional<HealthStatsComponentData> get_data();
+	bool set_stamina(float data);
 };
 
 class APawn {
@@ -51,7 +52,10 @@ public:
 	bool set_reload_animations(void* ReloadCharacterAnimation, void* ReloadFullCharacterAnimation, void* ReloadGunAnimation, void* ReloadFullGunAnimation);
 	bool set_equip_animation(void* Animation);
 
-	void reset_values(void);
+	float get_air_down_time_multiplier(void);
+	RecoilStruct get_recoil(void);
+	SpreadData get_spread(void);
+	ReloadAnimations get_reload_animations(void);
 };
 
 class UInventoryComponent_Game {
