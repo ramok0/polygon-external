@@ -44,6 +44,7 @@ namespace config {
 		bool instant_reload;
 		int tracers_bone;
 		bool tracers;
+		bool infinite_nades;
 	};
 
 	inline libconfig::ConfigurationLoader<config_t>* config = new libconfig::ConfigurationLoader<config_t>("polygon");

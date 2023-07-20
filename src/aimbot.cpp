@@ -24,10 +24,13 @@ void modules::aimbot()
 
 	Vector3 head_loc = (*cache::closest_entity).get_bone_with_rotation(config::config->data()->aim_bone);
 
-	FRotator result = calc_angle(cache::view_info.Location, head_loc);
+	std::optional<FMinimalViewInfo> camera = cache::LocalController->get_camera_manager()->get_camera();
+	if (!camera) return;
+
+	FRotator result = calc_angle((*camera).Location, head_loc);
 
 	if (config::config->data()->smoothing) {
-		result = cache::view_info.Rotation.lerp(result, config::config->data()->smoothing_value);
+		result = (*camera).Rotation.lerp(result, config::config->data()->smoothing_value);
 	}
 
 	cache::LocalPawn->move_at(result);

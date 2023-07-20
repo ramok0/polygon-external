@@ -180,7 +180,7 @@ void gui::draw_menu(void)
 		}
 
 		if (data->rapid_fire) {
-			ImGui::SliderFloat("Time Between Shots", &data->time_between_shots, 0.002, 0.35f);
+			ImGui::SliderFloat("Time Between Shots", &data->time_between_shots, 0.002f, 0.35f);
 		}
 
 		if (ImGui::Button("Self Destruct"))

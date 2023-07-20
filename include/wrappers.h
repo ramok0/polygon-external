@@ -63,6 +63,8 @@ public:
 	AItem_Gun_General* get_current_weapon();
 	AItem_Gun_General* get_primary_weapon();
 	AItem_Gun_General* get_secondary_weapon();
+
+	bool set_grenades_count(char count);
 };
 
 class USceneComponent {

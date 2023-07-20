@@ -138,11 +138,6 @@ void cache::cache_data()
 			break;
 		}
 
-		//exploits::instantaim();
-		//exploits::no_spread();
-		//exploits::fast_move();
-		//exploits::instant_reload();
-
 		for (const auto& exploit : m_exploits) {
 			exploit->tick();
 		}

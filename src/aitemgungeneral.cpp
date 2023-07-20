@@ -1,6 +1,5 @@
 #include <wrappers.h>
 #include <offsets.h>
-#include <exploits.h>
 #include <gamestructs.h>
 
 float AItem_Gun_General::get_time_between_shots(void)
