@@ -195,6 +195,9 @@
     <ClCompile Include="src\fstring.cpp">
       <Filter>Source Files\ue4</Filter>
     </ClCompile>
+    <ClCompile Include="src\scanner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ressources\roboto.h">
@@ -286,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="include\exploits\instantreload.h">
       <Filter>Header Files\cheating\exploits</Filter>
+    </ClInclude>
+    <ClInclude Include="include\scanner.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,6 +5,9 @@
 #include <cache.h>
 #include <offsets.h>
 #include <exploits.h>
+#include <game.h>
+#include <scanner.h>
+
 
 int main(void) {
 	if (!config::init()) {
@@ -28,8 +31,25 @@ int main(void) {
 	}
 
 	data::base_address = driver::get_base_address();
-
 	std::cout << "POLYGON-Win64-Shipping.exe : 0x" << std::uppercase << std::hex << data::base_address << std::endl;
+
+	auto [image, image_length] = clone_image();
+	if (!image) {
+		std::cout << "Failed to read game image" << std::endl;
+		return 1;
+	}
+
+
+	std::cout << "Searching for GObjects array.." << std::endl;
+	offsets::objects = find_gobjects(image, image_length);
+	std::cout << "Found GObjects array at 0x" << std::hex << std::uppercase << offsets::objects << std::endl;
+	std::cout << "Searching for GWorld.." << std::endl;
+	offsets::world = find_gworld(image, image_length);
+	std::cout << "Found GWorld at 0x" << std::hex << std::uppercase << offsets::world << std::endl;
+	std::cout << "Searching for FNamePool.." << std::endl;
+	offsets::names = find_namepooldata(image, image_length);
+	std::cout << "Found FNamePool at 0x" << std::hex << std::uppercase << offsets::names << std::endl;
+
 	std::cout << "Loading internal classes... Please wait !" << std::endl;
 	cache_offsets();
 	std::cout << "Cached " << std::dec << offset_cache.size() << " internal reflected classes" << std::endl;

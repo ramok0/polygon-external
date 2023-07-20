@@ -1,10 +1,10 @@
 #pragma once
-typedef int offset;
+typedef unsigned long long offset;
 
 namespace offsets {
-	inline offset world = 0x7FE3C50;
-	inline offset names = 0x7DE4500;
-	inline offset objects = 0x7E8ABB0;
+	inline offset world = 0x0;
+	inline offset names = 0x0;
+	inline offset objects = 0x0;
 	inline offset bone_array = 0x600;
 	inline offset component_to_world = 0x240;
 	inline offset ref_skeleton = 0x2E0;
