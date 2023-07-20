@@ -29,10 +29,10 @@ int main(void) {
 
 	data::base_address = driver::get_base_address();
 
-	std::cout << "base address : " << std::hex << data::base_address << std::endl;
-
+	std::cout << "POLYGON-Win64-Shipping.exe : 0x" << std::uppercase << std::hex << data::base_address << std::endl;
+	std::cout << "Loading internal classes... Please wait !" << std::endl;
 	cache_offsets();
-	std::cout << "Successfully dumped " << std::dec << offset_cache.size() << " classes" << std::endl;
+	std::cout << "Cached " << std::dec << offset_cache.size() << " internal reflected classes" << std::endl;
 
 	std::thread(cache::cache_data).detach();
 
@@ -57,13 +57,17 @@ int main(void) {
 		window::tick(window);
 	}
 
+	std::cout << "Cleaning window.." << std::endl;
 	window::cleanup(window);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	if (data::should_self_destruct)
 	{
+		std::cout << "Resetting exploits back to defaults.." << std::endl;
 		exploits::panic();
 	}
+
+	std::cout << "Bye !" << std::endl;
 
 	return 0;
 }
