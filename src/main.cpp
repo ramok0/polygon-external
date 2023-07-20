@@ -49,6 +49,10 @@ int main(void) {
 	std::cout << "Searching for FNamePool.." << std::endl;
 	offsets::names = find_namepooldata(image, image_length);
 	std::cout << "Found FNamePool at 0x" << std::hex << std::uppercase << offsets::names << std::endl;
+	offsets::component_to_world = find_component_to_world(image, image_length);
+	std::cout << "Found component_to_world : 0x" << std::hex << std::uppercase << offsets::component_to_world << std::endl;
+
+	delete[] image;
 
 	std::cout << "Loading internal classes... Please wait !" << std::endl;
 	cache_offsets();

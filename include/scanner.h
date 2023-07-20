@@ -9,3 +9,4 @@ uint64_t  relative_to_absolute(uint64_t address, int offset);
 uint64_t find_gworld(uint8_t* image, size_t image_length);
 uint64_t find_gobjects(uint8_t* image, size_t image_length);
 uint64_t find_namepooldata(uint8_t* image, size_t image_length);
+uint32_t find_component_to_world(uint8_t* image, size_t image_length);

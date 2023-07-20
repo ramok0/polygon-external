@@ -103,3 +103,22 @@ uint64_t find_namepooldata(uint8_t* image, size_t image_length)
 
 	return relative_to_absolute(relative, 3);
 }
+
+uint32_t find_component_to_world(uint8_t* image, size_t image_length)
+{
+	constexpr const char* COMPONENT_TO_WORLD_PATTERN = "0F 28 81 ? ? ? ? 48 8B C2 0F 28 89 ? ? ? ? 0F 29 02";
+
+	unsigned long region = pattern_scan(image, image_length, COMPONENT_TO_WORLD_PATTERN);
+
+	uint8_t bytes[4];
+	if (!driver::read((uintptr_t)data::base_address + region + 3, (uintptr_t)bytes, sizeof(bytes))) return 0;
+
+	uint32_t result = 0;
+
+	result |= bytes[0];
+	result |= bytes[1] << 8;
+	result |= bytes[2] << 16;
+	result |= bytes[3] << 24;
+
+	return result;
+}
