@@ -31,7 +31,7 @@ void gui::draw_tabs(void)
 
 void gui::draw_menu(void)
 {
-	ImGui::ShowStyleEditor();
+	//ImGui::ShowStyleEditor();
 	config::config_t* data = config::config->data();
 	ImGuiIO& io = ImGui::GetIO();
 
@@ -182,6 +182,16 @@ void gui::draw_menu(void)
 		if (data->rapid_fire) {
 			ImGui::SliderFloat("Time Between Shots", &data->time_between_shots, 0.002f, 0.35f);
 		}
+
+		ImGui::Spacing();
+
+		ImGui::Checkbox("Module List", &config::config->data()->module_list);
+		if (config::config->data()->module_list) {
+			ImGui::Checkbox("RGB Module List", &config::config->data()->module_list_rgb);
+		}
+
+		ImGui::Spacing();
+		ImGui::Spacing();
 
 		if (ImGui::Button("Self Destruct"))
 		{

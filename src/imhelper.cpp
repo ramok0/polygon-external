@@ -24,3 +24,18 @@ bool center_tab_button(const char* label, ImVec2 button_size, float alignment)
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 4.f);
 	return ImGui::Button(label, button_size);
 }
+
+ImColor get_rainbow_color()
+{
+	static float rainbow;
+	rainbow += 0.0001f;
+	if (rainbow > 1.f) rainbow = 0.f;
+
+	float r;
+	float g;
+	float b;
+
+	ImGui::ColorConvertHSVtoRGB(rainbow, 1.f, 1.f, r, g, b);
+
+	return ImColor(r, g, b);
+}

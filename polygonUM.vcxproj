@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\bonecluster.cpp" />
     <ClCompile Include="lib\imgui\imgui.cpp" />
     <ClCompile Include="lib\imgui\imgui_demo.cpp" />
     <ClCompile Include="lib\imgui\imgui_draw.cpp" />
@@ -163,6 +164,9 @@
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\esp.cpp" />
     <ClCompile Include="src\exploits.cpp" />
+    <ClCompile Include="src\exploits\rapidfire.cpp" />
+    <ClCompile Include="src\exploits\recoil.cpp" />
+    <ClCompile Include="src\exploits\stamina.cpp" />
     <ClCompile Include="src\field.cpp" />
     <ClCompile Include="src\fstring.cpp" />
     <ClCompile Include="src\gui.cpp" />
@@ -213,6 +217,7 @@
     <ClInclude Include="include\polygon.h" />
     <ClInclude Include="include\ressources\roboto.h" />
     <ClInclude Include="include\scanner.h" />
+    <ClInclude Include="include\singleton.h" />
     <ClInclude Include="include\skeleton.h" />
     <ClInclude Include="include\tarray.h" />
     <ClInclude Include="include\ue4.h" />

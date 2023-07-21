@@ -3,9 +3,36 @@
 #include <cache.h>
 #include <polygon.h>
 #include <imhelper.h>
+#include <exploits.h>
 
 void overlay::draw(void) {
 	config::config_t* data = config::config->data();
+
+	if (data->module_list) {
+		ImGui::SetNextWindowPos({ 30.f, 250.f }, ImGuiCond_Appearing);
+		ImGui::SetNextWindowBgAlpha(0.35f);
+		ImGui::Begin("##modlist", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoNavInputs | ImGuiWindowFlags_NoNavFocus);
+		ImColor color = data->module_list_rgb ? get_rainbow_color() : ImColor(0.89f, 0.89f, 0.89f, 0.75f);
+		ImGui::PushStyleColor(ImGuiCol_Text, color.Value);
+		text_centered("Enabled Modules");
+		ImGui::Spacing();
+		if (data->aim)
+			ImGui::Text("-> Aimbot");
+
+		if (data->esp)
+			ImGui::Text("-> ESP");
+
+		if (data->tracers)
+			ImGui::Text("-> Tracers");
+
+		for (const auto& exploit : m_exploits) {
+			if (exploit->is_enabled())
+				ImGui::Text(("-> " + exploit->get_name()).c_str());
+		}
+		ImGui::PopStyleColor();
+		ImGui::End();
+	}
+
 	for (auto& entity : cache::entities) {
 		if (entity.HealthComponentData.bIsAlive == false || entity.HealthComponentData.Health == 0) continue;
 		if (data->team_check && cache::LocalTeam == entity.Team) continue;

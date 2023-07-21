@@ -3,19 +3,20 @@
 #include <cache.h>
 #include <config.h>
 #include <wrappers.h>
+#include <numbers>
 
 FRotator calc_angle(Vector3 src, Vector3 dst)
 {
 	Vector3 vVector = dst - src;
-	double hypotenus = sqrt((vVector.x * vVector.x) + (vVector.y * vVector.y) + (vVector.z * vVector.z));
-	double pitch = atan2(vVector.z, hypotenus) * RAD_TO_DEG;
-	//double pitch = asin(vVector.z / hypotenus) * RAD_TO_DEG;
-	double yaw = atan2(vVector.y, vVector.x) * RAD_TO_DEG;
 
-	return FRotator(
-		pitch,
-		yaw,
-		0);
+	constexpr double RAD_TO_DEG = 180 / std::numbers::pi;
+
+	FRotator angle;
+
+	angle.Yaw = std::atan2(vVector.y, vVector.x) * RAD_TO_DEG;
+	angle.Pitch = std::atan2(vVector.z, sqrt(vVector.x * vVector.x + vVector.y * vVector.y + vVector.z * vVector.z)) * RAD_TO_DEG;
+
+	return angle;
 }
 
 void modules::aimbot()

@@ -55,6 +55,12 @@
     <Filter Include="Header Files\cheating\exploits">
       <UniqueIdentifier>{a3ca474a-c19e-4001-8269-c8221add5dac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\renderer\components">
+      <UniqueIdentifier>{7025ac96-f439-4900-9947-560f6f24d05a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\exploits">
+      <UniqueIdentifier>{4a0d61de-1ade-4de7-b769-758ceb38c8ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -198,6 +204,18 @@
     <ClCompile Include="src\scanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="include\bonecluster.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\exploits\rapidfire.cpp">
+      <Filter>Source Files\exploits</Filter>
+    </ClCompile>
+    <ClCompile Include="src\exploits\recoil.cpp">
+      <Filter>Source Files\exploits</Filter>
+    </ClCompile>
+    <ClCompile Include="src\exploits\stamina.cpp">
+      <Filter>Source Files\exploits</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ressources\roboto.h">
@@ -291,6 +309,9 @@
       <Filter>Header Files\cheating\exploits</Filter>
     </ClInclude>
     <ClInclude Include="include\scanner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\singleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

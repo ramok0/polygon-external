@@ -1,6 +1,5 @@
 #pragma once
 #include <vectortypes.h>
-#include <wrappers.h>
 #include <memory>
 #include <stdexcept>
 
@@ -33,22 +32,7 @@ public:
 
 	BoneCluster(USkeletalMeshComponent* Mesh)
 	{
-		auto array = Mesh->get_bone_array();
-		if (!array)
-		{
-			this->m_count = 0;
-			this->m_data = nullptr;
-		}
-		else {
-			this->m_count = array.value().Count;
-
-			FTransform* el = array->read_every_elements();
-
-			this->m_data = std::unique_ptr<FTransform[]>(new FTransform[this->m_count]);
-			std::memcpy(this->m_data.get(), el, sizeof(FTransform) * this->m_count);
-
-			delete[] el;
-		}
+		this->initialize_array(Mesh);
 	}
 
 	int size() const {
@@ -64,6 +48,8 @@ public:
 	}
 
 private:
+	void initialize_array(USkeletalMeshComponent* Mesh);
+
 	int m_count;
 	std::unique_ptr<FTransform[]> m_data;
 };

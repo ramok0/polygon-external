@@ -7,6 +7,7 @@
 #include <chrono>
 #include <exploits.h>
 #include <modules.h>
+#include <wrappers.h>
 
 void cache::cache_data()
 {

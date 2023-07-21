@@ -113,6 +113,7 @@ public:
 	uint8_t get_team_number(void);
 	std::string get_player_name(void);
 	UInventoryComponent_Game* get_inventory(void);
+	bool is_a_bot();
 };
 
 class USkinnedAsset {
